@@ -1,0 +1,676 @@
+\documentclass[11pt]{article}
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{Lineær algebra Projekt B}
+    \author{Christian Jacobsen}
+       
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+\begin{document}
+    
+    
+    \maketitle
+    \hypertarget{opgave-1}{%
+\section{Opgave 1}\label{opgave-1}}
+
+Vi betragter den lineære transformation \[ 
+T(x_1,x_2,x_3,x_4,x_5) = 
+\begin{pmatrix} 
+2x_1-4x_2-x_3-3x_4+2x_5\\
+-x_1+2x_2+x_3+x_5\\
+x_1-2x_2-x_3-3x_4-x_5\\
+-x_1+4x_2-x_3+x_5
+\end{pmatrix} \quad \text{ For }\quad 
+\begin{pmatrix}x_1 \\ x_2\\ x_3\\ x_4\\ x_5\end{pmatrix} \in \mathbb{R}^5\]
+
+    \hypertarget{a}{%
+\subsection{A}\label{a}}
+
+Vi bestemmer matricen \(A\) som opfylder \(T(x) = Ax\) for alle
+\(x \in R^5\)
+
+    Vi opstiller coefficientmatricen
+
+    \[
+\left(\begin{array}{rrrrr}
+         2 & -4 & -1 & -3 & 2 \\
+         -1 & 2 & 1 & 0 & 1 \\
+         1 & -2 & -1 & -3 & -1 \\
+         -1 & 4 & -1 & 0 & 1
+\end{array}\right)
+\]
+            
+    \hypertarget{b}{%
+\subsection{B}\label{b}}
+
+Vi lader nu $ y=\begin{pmatrix}y_1 \\
+y_2 \\ y_3 \\ y_4
+\end{pmatrix}$ være en vilkårlig ukendt vektor, og vil
+nu finde en \(x\) således at \(Ax = y\)
+\[
+\left(
+\begin{array}{rrrrrr}
+         2 & -4 & -1 & -3 & 2 & y_{1} \\
+         -1 & 2 & 1 & 0 & 1 & y_{2} \\
+         1 & -2 & -1 & -3 & -1 & y_{3} \\
+         -1 & 4 & -1 & 0 & 1 & y_{4}
+         \end{array}\right)
+\]
+
+Swap rows r0 <-> r2\\
+Add rows r1 + 1 * r0\\
+Add rows r2 + -2 * r0\\
+Add rows r3 + 1 * r0\\
+Swap rows r3 <-> r1\\
+Rescale row r1 * 1/2\\
+Add rows r0 + 2 * r1\\
+Add rows r1 + 1 * r2\\
+Add rows r0 + 3 * r2\\
+Add rows r2 + 1 * r3\\
+Add rows r1 + 1/2 * r3\\
+Add rows r0 + 1 * r3\\
+Rescale row r3 * -1/3\\
+
+\[
+\left(\begin{array}{rrrrrr}
+         1 & 0 & 0 & 0 & 11 & 3 , y_{1} + y_{2} - 3  y_{3} + y_{4} \\
+         0 & 1 & 0 & 0 & 4 & y_{1} + \frac{1}{2} , y_{2} - y_{3} + \frac{1}{2} , y_{4} \\
+         0 & 0 & 1 & 0 & 4 & y_{1} + y_{2} - y_{3} \\
+         0 & 0 & 0 & 1 & 0 & -\frac{1}{3}  y_{2} - \frac{1}{3} , y_{3}
+ \end{array}\right)
+\]
+    \hypertarget{c}{%
+\subsection{C}\label{c}}
+
+Vi er nu blevet bedt om at bestemme en basis for ker t. Vi finder alle
+de vektorer der opfylder \(Ax=0\) ved at opstille en totalmatrice og
+løse den
+
+Vi har tidligere udregnet \(A^*\), altså \(Ax = y\), og hvis \(y = 0\)
+så har vi følgende vektorer opfylder \(Ax=0\) \[ 
+\begin{bmatrix}x_1,x_2,x_3,x_4,x_5\end{bmatrix} =  t\cdot \begin{bmatrix}-11\\-4\\-4\\0\\1\end{bmatrix}
+\]
+
+    Og for at teste det så sætter vi \(t=1\) og udregner transformationen
+\[ 
+T(-11,-4,-4,0,1) = 
+\begin{pmatrix} 
+2x_1-4x_2-x_3-3x_4+2x_5\\
+-x_1+2x_2+x_3+x_5\\
+x_1-2x_2-x_3-3x_4-x_5\\
+-x_1+4x_2-x_3+x_5
+\end{pmatrix} = \begin{pmatrix} 
+2\cdot(-11)-4\cdot(-4)+4+2\\
+11-2\cdot 4 -4+1\\
+-11+2\cdot 4+ 4 -1\\
+11-4\cdot4+4+1
+\end{pmatrix} = \begin{pmatrix} 
+0\\
+0\\
+0\\
+0
+\end{pmatrix}\]
+
+    \hypertarget{d}{%
+\subsection{D}\label{d}}
+
+Vi vil nu gøre rede for at enhver højreinvers til \(T\) er injektiv,
+Altså at enhver vektor \(x\) har en og kun en tilsvarende \(T(x) = y\),
+og vice versa.
+
+En højreinvers \(S\) til en transformation \(T\) kan defineres af
+\(S(T(x)) = x\).\\
+Det er et krav for at en funktion er injektiv at hvis
+\(S(x_1) = S(x_2)\) så må det gælde at \(x_1 = x_2\).
+
+Hvis der fandtes en ikke-injektiv funktion \(S\) så ville det være
+muligt at have flere forskellige \(x\) således at
+\(S(T(x_1)) = S(T(x_2))\) hvor \(x_1 \neq x_2\), og derfor er \(S\) nød
+til at være injektiv
+
+
+    
+\maketitle
+    
+    
+
+    
+\hypertarget{opgave-2}{%
+\section{Opgave 2}\label{opgave-2}}
+
+Vi betragter følgende vektorer i \(\mathbb{R}^4\)
+\[ u_1 = \begin{pmatrix}1\\ -1\\ 1\\ 1 \end{pmatrix}, 
+u_2 = \begin{pmatrix} 1\\ 2\\ 0\\ 2\end{pmatrix},
+u_3 = \begin{pmatrix}1\\ 0\\ -1\\ 0\end{pmatrix}, \text{ og }
+v_1 = \begin{pmatrix}5\\ -3\\ -4\\ -1\end{pmatrix},
+v_2 = \begin{pmatrix}6\\ 4\\ 1\\ 8\end{pmatrix},
+v_3 = \begin{pmatrix}7\\ 2\\ -1\\ 6\end{pmatrix}
+\]
+
+Vi får så oplyst at \(\mathcal{B} = \{u_1, u_2, u_3\}\) og
+\(\mathcal{C} = \{v_1, v_2, v_3\}\) begge er baser for underrummet \(U\)
+
+    \hypertarget{a2}{%
+\subsection{A}\label{a2}}
+
+Vi vil nu bestemme basisskift-matricen
+\(P_{\mathcal{B}\leftarrow\mathcal{C}}\)
+
+Den lange måde at omdanne et koordinat fra en base til en anden, er at
+finde vektoren \(V_b = x_1\cdot b_1 + \dots + x_k\cdot b_k\). Vi
+genkender korrekt dette som et ligningssystem og opstiller nu en formel
+for at beskrive en vektor med en base \([B|u] \rightarrow [I_n|V_b]\).\\
+Vi kan udføre denne process på flere koordinater af gangen, ved at samle
+dem til en matrixe
+\(\left[ B|u_1|u_2|u_3\right] \rightarrow \left[I_n|V_{1b}|V_{2b}|V_{3b}\right]\)
+
+    Vi opstiller matricerne \(B = [u_1|u_2|u_3], C = [v_1,v_2,v_3]\)\\
+Basisskiftmatricen kan findes ved at udtrykke alle koordinaterne
+\(v_1,v_2,v_3\) ved basen \(B\), og samle dem i en matrice. Baseret på
+forrige udregninger kan vi så sige
+\(P_{\mathcal{B}\leftarrow\mathcal{C}}\) kan findes ved at bringe
+\([C|B]\) på reduceret rækkeechelonform
+
+\[ \left(\begin{array}{rrrrrr}
+         5 & 6 & 7 & 1 & 1 & 1 \\
+         -3 & 4 & 2 & -1 & 2 & 0 \\
+         -4 & 1 & -1 & 1 & 0 & -1 \\
+         -1 & 8 & 6 & 1 & 2 & 0\\
+ \end{array}\right) \]
+
+\begin{Verbatim}
+	Swap rows r3 <-> r0
+	Add rows r1 + -3 * r0
+	Add rows r2 + -4 * r0
+	Add rows r3 + 5 * r0
+	Rescale row r1 * -1/20
+	Add rows r2 + 31 * r1
+	Add rows r3 + -46 * r1
+	Add rows r0 + -8 * r1
+	Add rows r3 + 1 * r2
+	Add rows r1 + 4 * r2
+	Add rows r0 + -2 * r2
+	Rescale row r2 * -5
+	Rescale row r0 * -1
+\end{Verbatim}
+
+\[ \left(\begin{array}{rrrrrr}
+         1 & 0 & 0 & 7 & -4 & -2 \\
+         0 & 1 & 0 & 13 & -7 & -4 \\
+         0 & 0 & 1 & -16 & 9 & 5 \\
+         0 & 0 & 0 & 0 & 0 & 0\\
+\end{array}\right) \]
+            
+Vi fjerner nulrækken, og trækker de tre højre kolonner over til en 3x3
+matrice, og opstiller
+\[ P_{\mathcal{B}\leftarrow\mathcal{C}} = \left(\begin{array}{rrr}
+7 & -4 & -2 \\
+13 & -7 & -4 \\
+-16 & 9 & 5
+\end{array}\right) \]
+
+    \hypertarget{b2}{%
+\subsection{B}\label{b2}}
+
+Vi er nu blevet bedt om at finde basisskift matricen
+\(P_{C\leftarrow B}\). Vi ved at den er den inverse af
+\(P_{C\leftarrow B}\)\\
+Vi opstiller
+
+\[\left(\begin{array}{rrr}
+         1 & 2 & 2 \\
+         -1 & 3 & 2 \\
+         5 & 1 & 3
+\end{array}\right) \]
+            
+    \hypertarget{c}{%
+\subsection{C}\label{c}}
+
+Vi opstiller nogle koordinater udtrykt ved \(\mathcal{C}\)
+\(x = \begin{pmatrix}1\\\lambda\\-1\end{pmatrix}\)
+
+Vi vil gerne udtrykke dem i \(\mathcal{B}\) og siger derfor
+\(P_{C\leftarrow B}\cdot x = [x]_B\)
+
+    Og får vektoren
+\(\begin{pmatrix}-4\lambda + 9\\ -7\lambda + 17\\ 9\lambda - 21 \end{pmatrix}\)
+
+    \hypertarget{d}{%
+\subsection{D}\label{d}}
+
+Vi vil nu bestemme samtlige vektorer i underrummet \(U\) som har formen
+\((t,t,t,t)\) for et tal \(t \in \mathbb{R}\)
+
+Vi ved at vi kan udtrykke en vektor \(v \in \mathcal{U}\) som
+koordinater i \(B\). Derfor kan vi skrive alle vektorer op i \(B\) ved
+at udregne \([B|t] \rightarrow [I_4|[t]_B]\)
+
+\[
+\left(\begin{array}{rrrr}
+1 & 1 & 1 & t \\
+-1 & 2 & 0 & t \\
+1 & 0 & -1 & t \\
+1 & 2 & 0 & t
+\end{array}\right)
+\]
+\begin{Verbatim}
+Add rows r1 + 1 * r0
+Add rows r2 + -1 * r0
+Add rows r3 + -1 * r0
+Swap rows r1 <-> r2
+Add rows r2 + 3 * r1
+Add rows r3 + 1 * r1
+Add rows r0 + 1 * r1
+Rescale row r2 * 1/5
+Add rows r3 + -3 * r2
+Add rows r1 + -2 * r2
+Add rows r0 + -1 * r2
+\end{Verbatim}
+\[
+\left(\begin{array}{rrrr}
+	1 & 0 & 0 & \frac{3}{5} \, t \\
+	0 & -1 & 0 & -\frac{4}{5} \, t \\
+	0 & 0 & -1 & \frac{2}{5} \, t \\
+	0 & 0 & 0 & -\frac{6}{5} \, t
+\end{array}\right)
+\]
+
+
+Og vi ser nu at ligningssystemet er inconsistent, og at der derfor ingen
+løsning findes
+
+    
+    
+    
+\section{Opgave 3}
+
+Vi har et spil som asteroids hvor vi gerne vil rykke rundt på et
+rumskib, som er bestemt ved to punkter \(C = (c_1,C_2)\) og
+\(S = (s_1, s_2)\)
+
+Ved spillets start er rumskibet placeret med \(C = (0,0)\) og
+\(S = (0,1)\). Vi har at ved tryk på venstre eller højre pil, roteres
+rumskibet om sit centrum ed en vis vinkel \(\theta\) mod eller med uret.
+Ved tryk på op, forskydes rumskibet efter vektoren \(\vec{CS}\)
+
+    Vi samler de fire tal \(c_1,c_2,s_1,s_2\) som en vektor i \(R^4\)
+
+    \hypertarget{a3}{%
+\subsection{A}\label{a3}}
+
+Vi vil nu bestemme en matrice \(F\) som forskyder vektoren frem. Vi
+opstiller matricen \[\begin{pmatrix}
+0&0&1&0\\
+0&0&0&1\\
+-1&0&2&0\\
+0&-1&0&2\\
+\end{pmatrix}\]
+
+\hypertarget{b3}{%
+\subsection{B}\label{b3}}
+
+Vis at rotationsmatricerne \(L_\theta\) og \(R_\theta\) er
+rotationsmatricer som følger:
+
+    Vi opstiller så også en formel for S. Vi har fået udleveret at efter en
+transformation gælder det
+\(\begin{pmatrix}s^L_1\\ s^L_2\end{pmatrix} = \begin{pmatrix}c_1\\ c_2\end{pmatrix} + \begin{pmatrix}\cos\theta&-\sin\theta\\\sin\theta&\cos\theta\end{pmatrix}\begin{pmatrix}s_1-c_1\\ s_2-c_2\end{pmatrix}\)
+
+    Ud fra det kan vi se at \(C + R_\theta\cdot \vec{CS} = S\)
+
+    Vi ganger først \(R \vec{CS}\) sammen og får \[ R\cdot \vec{CS} = 
+\begin{pmatrix}
+    \cos\theta\cdot(s_1 - c_1) - \sin\theta \cdot(s_2-c_2)\\
+    \sin\theta\cdot(s_1 - c_1) + \cos\theta (s_2-c_2)
+\end{pmatrix}
+\]
+
+    Vi udvider så paranteserne
+\[ S = \begin{pmatrix}c_1\\ c_2\end{pmatrix} +
+\begin{pmatrix} 
+s_1(\cos\theta)- c_1(\cos\theta) -s_2(\sin\theta) + c_2(\sin\theta)\\
+s_1(\sin\theta)-c_1(\sin\theta) + s_2(\cos\theta) -c_2(\cos\theta)
+\end{pmatrix}
+\]
+
+    Nu har vi så næsten parametriseret matricen, vi summere nu ligningen
+
+    \[ S = \begin{pmatrix}
+    s_1(\cos\theta)& c_1-c_1(\cos\theta)& -s_2(\sin\theta) & +c_2(\sin\theta)\\
+    s_1(\sin\theta)&-c1(\sin\theta)& +s_2(\cos\theta) & c_2 - c_2 (\cos\theta)
+    \end{pmatrix}
+\]
+
+    Den opmærksomme læser har nu spottet at vi næsten har opsat en ligning
+for den parametriserede \(S\). Vi sætter op med coefficienterne(og
+omarrangerer efter den rækkefølge de skal passe i: $c\_1 c\_2 s\_1
+s\_2)$
+
+    \[
+S = \begin{bmatrix}
+1-\cos\theta & \sin\theta   & \cos\theta & -\sin\theta\\
+-\sin\theta & 1-\cos\theta & \sin\theta & \cos\theta
+\end{bmatrix}
+\]
+
+    Og hey. Det var 100\% det vi skulle vise for S. Vi har derfor matricen
+\[ L_\theta = \begin{pmatrix}1&0&0&0\\0&1&0&0\\
+1-\cos\theta & \sin\theta   & \cos\theta & -\sin\theta\\
+-\sin\theta & 1-\cos\theta & \sin\theta & \cos\theta
+\end{pmatrix}
+\]
+
+    Vi får så også at vide at \(R_\theta = L_{-\theta}\). Vi husker også
+\(cos_\theta = cos_{-\theta}\). Derfor har vi
+\[ R_\theta \begin{pmatrix}1&0&0&0\\0&1&0&0\\
+1-\cos\theta & -\sin\theta   & \cos\theta & \sin\theta\\
+\sin\theta & 1-\cos\theta & -\sin\theta & \cos\theta
+\end{pmatrix}
+\]
+
+    \hypertarget{c3}{%
+\subsection{C}\label{c3}}
+Vi har nu fået udleveret en hel række af operationer udført på rumskibet.
+For at nå frem til den endelige position, kan vi gange transformationsmatricerne
+sammen som følger:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{n}{var}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{t}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{t} \PY{o}{=} \PY{l+m+mi}{25}\PY{o}{*} \PY{p}{(}\PY{n}{pi}\PY{o}{/}\PY{l+m+mi}{180}\PY{p}{)}
+          \PY{n}{F} \PY{o}{=} \PY{n}{matrix}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+          \PY{n}{L} \PY{o}{=} \PY{n}{matrix}\PY{p}{(}\PY{p}{[}
+              \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mi}{1}\PY{o}{\PYZhy{}}\PY{n}{cos}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{,} \PY{n}{sin}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{,} \PY{n}{cos}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{n}{sin}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{o}{\PYZhy{}}\PY{n}{sin}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{1}\PY{o}{\PYZhy{}}\PY{n}{cos}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{,} \PY{n}{sin}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{,} \PY{n}{cos}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{]}\PY{p}{,}
+          \PY{p}{]}\PY{p}{)}
+          \PY{n}{R} \PY{o}{=} \PY{n}{matrix}\PY{p}{(}\PY{p}{[}
+              \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mi}{1}\PY{o}{\PYZhy{}}\PY{n}{cos}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{n}{sin}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{,} \PY{n}{cos}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{,} \PY{n}{sin}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{n}{sin}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{1}\PY{o}{\PYZhy{}}\PY{n}{cos}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{n}{sin}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{,} \PY{n}{cos}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{]}
+          \PY{p}{]}\PY{p}{)}
+          \PY{n}{P} \PY{o}{=} \PY{n}{matrix}\PY{p}{(}\PY{n}{SR}\PY{p}{,} \PY{p}{[}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n}{P1} \PY{o}{=} \PY{n}{F}\PY{o}{*}\PY{n}{R}\PY{o}{*}\PY{n}{F}\PY{o}{*}\PY{n}{R}\PY{o}{*}\PY{n}{F}\PY{o}{*}\PY{n}{F}\PY{o}{*}\PY{n}{L}\PY{o}{*}\PY{n}{P}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{show}\PY{p}{(}\PY{n}{N}\PY{p}{(}\PY{n}{P1}\PY{p}{,} \PY{n}{digits}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} Print en numerisk approximation med 3 betydende cifre}
+\end{Verbatim}
+
+    
+    \begin{verbatim}
+[  -0.423]
+[    3.72]
+[0.000366]
+[    4.62]
+    \end{verbatim}
+
+    
+    \hypertarget{d3}{%
+\subsection{D}\label{d3}}
+
+Vi vil nu forklare hvorfor \(L_\theta^{72} = I_4\). Det gælder at
+\(\theta\) er \(25^\circ\), og \(L_\theta^72\) er det samme som at
+rotere \(\theta\cdot 72 = 1800\) grader. Kigger vi så på \(L_{1800}\)
+får vi \[ \begin{pmatrix}
+1&0&0&0\\
+0&1&0&0\\
+0 & 0  & 1 & 0\\
+0 & 0 & 0 & 1\\
+\end{pmatrix}\]
+
+    Tænker vi over det så ser vi at en rotation på 1800 grader, er det samme
+som at dreje rundt om sig selv, 5 hele gange, og at det derfor giver
+mening at \(\cos(1800) = 1\) og \(\sin(1800) = 0\)
+\end{document}

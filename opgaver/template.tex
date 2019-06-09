@@ -1,0 +1,171 @@
+\documentclass[a4paper,fleqn]{report}
+\title{Rapport}
+\author{P\aa b\o l}
+
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\usepackage[danish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{lastpage}
+\usepackage{lipsum}
+\usepackage[colorlinks, linkcolor=black]{hyperref}
+\usepackage{listings}
+\usepackage{upquote}
+
+
+\addtolength{\oddsidemargin}{-.875in}
+\addtolength{\evensidemargin}{-.875in}
+\addtolength{\textwidth}{1.75in}
+\setlength{\parindent}{0in}
+
+\pagestyle{fancy}
+
+\title{Linalg}
+\begin{document}
+	\maketitle
+	\newpage
+	\setcounter{page}{1}
+	\chapter{Opgaver Uge 1}
+	\section{X.1}
+
+	Vi betragter ligningssystemet
+	\begin{equation}
+		(S) = \left\{ \begin{matrix}
+				x_1 &+& 2x_2 &-& x_3 &+& 4x_4 &=& 5\\
+				-4x_1&+&2x_2 &+&6x_3 & &	   &=& -2\\
+				x_1  &+&3x_2 & &&+&4x_4 &=& 10
+		\end{matrix} \right.
+	\end{equation}
+	Lad $A$ være koefficientmatricen, lad $b$ være konstantsøjlen og lad $M = \left[A|b\right]$
+	være totalmatricen for ligningssystemet (S).
+	\subsection{Bestem den reducerede rækkeechelonform for totalmatricen $M$}
+	Vi opstiller totalmatricen $M$
+	\[
+	M = \begin{bmatrix}
+	  1 & 2 & -1 & 4 & 5\\
+	  -4 & 2 & 6 & 0 & -2\\
+	  1 & 3 & 0 & 4 & 10\\
+	\end{bmatrix} r_2 + 4r_1 \rightarrow r_2, r_3 - r_1 \rightarrow r_3
+	\begin{bmatrix}
+	  1 & 2 & -1 & 4 & 5\\
+	  0 & 10 & 2 & 16 & 18\\
+	  0 & 1 & 1 & 0 & 5\\
+	\end{bmatrix}
+	\]
+	Vi skalerer så den tredie linie med 10
+	\[
+	\begin{bmatrix}
+	  1. & 2. & -1. & 4. & 5.\\
+	  0. & 10. & 2. & 16. & 18.\\
+	  0. & 10. & 10. & 0. & 50.\\
+	\end{bmatrix} r_3 - r_2 \rightarrow r_3
+	\begin{bmatrix}
+	  1. & 2. & -1. & 4. & 5.\\
+	  0. & 10. & 2. & 16. & 18.\\
+	  0. & 0. & 8. & -16. & 32.\\
+	\end{bmatrix}
+	\]
+	Vi har nu rækkeechelonform. For reducering bruger vi backwardreduction. Vi skalerer først
+	alle pivoter til 1
+	\[
+	\begin{bmatrix}
+	  1. & 2. & -1. & 4. & 5.\\
+	  0. & 1. & 0.2 & 1.6 & 1.8\\
+	  0. & 0. & 1. & -2. & 4.\\
+	\end{bmatrix} r_2 - 0.2r_3 \rightarrow r_2, r_1 + r_3 \rightarrow r_1 
+	\begin{bmatrix}
+	  1. & 2. & 0. & 2. & 9.\\
+	  0. & 1. & 0. & 2. & 1.\\
+	  0. & 0. & 1. & -2. & 4.\\
+	\end{bmatrix}
+	\]
+	\[
+	r_1 - 2r_2 \rightarrow r_1
+	\begin{bmatrix}
+	  1. & 0. & 0. & -2. & 7.\\
+	  0. & 1. & 0. & 2. & 1.\\
+	  0. & 0. & 1. & -2. & 4.\\
+	\end{bmatrix}
+	\]
+	Vi ender med løsningerne:
+	\[\begin{array}{l}x_1 = 7+2t\\x_2 = 1-2t\\x_3 = 4+2t\\x_4 = t\end{array}\]
+	\subsection{Bestem Samtlige løsninger til ligningssystemet (S)}
+	Vi opstiller nu 4gradspolinomiet
+	\[a(7+2t) + b(1-2t) + c(4+2t) + d\cdot t = 0 \]
+
+	\section{X7}
+	Betragt ligningssystemet:
+	\[ \left\{ 
+	\begin{matrix}
+		-x_1 &+&&+& 2x_3 &+& -5x_4 &=&0\\
+		2x_1 &+& -1x_2 &+&-3x_3 &+&&=&0\\
+		x_1  &+& &+& -2x_3 &+& ax_4 &=& 1\\
+	\end{matrix}
+	\right.\]
+	\subsection{A}
+	Lad $a$ være ukendt. Omform totalmatricen for ligningssystemet ved at bruge 
+	rækkeoperationerne $2r_1 + r_2 \rightarrow r_2$ og $r_3 + r_1 \rightarrow r_3$
+	\[
+		M = \begin{bmatrix}
+			-1 & 0 & 2 & -5 & 0\\
+			2 &-1 &-3 & 0 & 0\\
+			1 & 0 & -2& a & 1\\
+		\end{bmatrix} r_2 + 2r_1 \rightarrow r_2 
+		\begin{bmatrix}
+			-1 & 0 & 2 & -5 & 0\\
+			0 &-1 & 1 & -10 & 0\\
+			1 & 0 & -2& a & 1\\
+		\end{bmatrix}r_3 + r_1 \rightarrow r_3
+		\begin{bmatrix}
+			-1 & 0 & 2 & -5 & 0\\
+			0 &-1 & 1  & -10 & 0\\
+			0 & 0 & 0  & a-5 & 1\\
+		\end{bmatrix}
+	\]
+	Ud fra det kan vi så se at ligningssystemet ingen løsning har for $a-5$
+
+	\subsection{b}
+	Lad $a = 4$. Omform totalmatricen til en matrix på reduceret rækkeechelonform og bestem
+	samtlige løsninger\\
+	Vi har Echelonformen fra forrige opgave:
+	\[
+		\begin{bmatrix}
+		  -1. & 0. & 2. & -5. & 0.\\
+		  0. & -1. & 1. & -10. & 0.\\
+		  0. & 0. & 0. & -1. & 1.\\
+		\end{bmatrix}
+	\]
+	Vi skalerer
+	\[ 
+		\begin{bmatrix}
+		  1. & 0. & -2. & 5. & 0.\\
+		  0. & 1. & -1. & 10. & 0.\\
+		  0. & 0. & 0. & 1. & -1.\\
+		\end{bmatrix}
+	\]
+	Og udfører rækkeoperationer
+	\[
+		\begin{bmatrix}
+		  1. & 0. & -2. & 0. & 5.\\
+		  0. & 1. & -1. & 0. & 10.\\
+		  0. & 0. & 0. & 1. & -1.\\
+		\end{bmatrix}
+	\]
+	Vi ser nu
+	\[\begin{array}{r@{=}l}
+		x_1 & 5+2t\\
+		x_2 & 10+t\\
+		x_3 & t\\
+		x_4 & -1
+	\end{array}\]
+	Løsningen er således
+	\[
+		a(5+2t) + b(10+t) + ct - d = 0
+	\]
+
+\end{document}

@@ -1,0 +1,416 @@
+\documentclass[a4paper,fleqn]{article}
+\title{Rapport}
+\author{P\aa b\o l}
+
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\usepackage[danish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{lastpage}
+\usepackage{lipsum}
+\usepackage[colorlinks, linkcolor=black]{hyperref}
+\usepackage{listings}
+\usepackage{upquote}
+
+\newcommand{\hmwkTitle}{Projekt 1} % Assignment title
+\newcommand{\hmwkDueDate}{03/05\ -\ 2019} % Due date
+\newcommand{\hmwkClass}{Lineær Algebra} % Course/class
+\newcommand{\hmwkClassInstructor}{Lærer: Henrik$^2$} % Teacher/lecturer
+\newcommand{\hmwkAuthorName}{Christian P\aa b\o l: \emph{wbr220}} % Your name
+\newcommand{\hmwkProblem}{Problemformulering: \emph{Ligningssystemer}}
+
+\addtolength{\oddsidemargin}{-.875in}
+\addtolength{\evensidemargin}{-.875in}
+\addtolength{\textwidth}{1.75in}
+\setlength{\parindent}{0in}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName} % Top left header
+\chead{\hmwkClass\ : \hmwkTitle} % Top center head
+\rhead{\rightmark}
+\cfoot{} % Bottom center footer
+\rfoot{Page\ \thepage\ of\ \protect\pageref{LastPage}} % Bottom right footer
+
+\title{
+	\vspace{2in}
+	\textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+	\normalsize\vspace{0.1in}\small{Afleveres:\ \hmwkDueDate}\\
+	\vspace{0.1in}\large{\textit{\hmwkClassInstructor}}\\
+	\normalsize\vspace{0.5in} \hmwkProblem  \\
+	\vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+
+\begin{document}
+	\maketitle
+	\newpage
+	\setcounter{page}{1}
+	\section{Opgave 1}
+	Vi betragter ligningssystemet med det ukendte, reele tal $a$:
+	\[ (S) = \left\{\begin{matrix}
+			2x_1 + (3+a)x_2 + 2x_3 = 2+a\\
+			x_1 + ax_2 + 2x_3 = a\\
+			ax_1 + 2x_2 + 2ax_3 = 0\\
+	\end{matrix}\right.\]
+	\subsection{(a)}
+	Antag at $A \neq \pm \sqrt{2}$. Vi bliver så bedt om at løse ligningssystemet ved at sætte
+	totalmatricen på reduceret rækkeechelonform\\
+	Vi har totalmatricen \[A = \begin{bmatrix}2&3+a&2\\1&a&2\\a&2&2a\end{bmatrix} \quad 
+	b = \begin{bmatrix}2+a \\ a \\ 0\end{bmatrix} \]
+	Matricen vi gerne vil eliminere er derfor:
+	\[ [A|b] = \left[\begin{array}{@{}ccc|c@{}}2&3+a&2 & 2+a\\1&a&2 & a\\a&2&2a & 0\end{array} \right]\]
+	Vi bruger Gauss-Jordan elimination til at løse ligningssystemet\\
+	\[ [A|b] = \left[\begin{array}{@{}ccc|c@{}}
+		2	&	3+a	&	2	& 2+a\\
+		1	&	a	&	2	& a\\
+		a	&	2	&	2a	& 0
+	\end{array} \right] r_1 \leftrightarrow r_2 \]
+	\[ \left[\begin{array}{@{}ccc|c@{}}
+		1	&	a	&	2	& a\\
+		2	&	3+a	&	2	& 2+a\\
+		a	&	2	&	2a	& 0
+	\end{array} \right] r_2 - 2r_1 \rightarrow r_2, r_3 -ar_1 \rightarrow r_3\]
+	\[ \left[\begin{array}{@{}ccc|c@{}}
+		1	&	a	&	2	& a\\
+		0	&	3 - a	&	-2	& 2-1a\\
+		0	&	-a^2+2	&	0	& -a^2
+	\end{array} \right] \frac{1}{3-a}r_2 \rightarrow r_2 \]
+	\[ \left[\begin{array}{@{}ccc|c@{}}
+		1	&	a		&	2		& a\\
+		0	&	1		&	\frac{2}{-3+a}	& \frac{-2+a}{-3+a}\\
+		0	&	-a^2+2		&	0		& -a^2
+	\end{array} \right] r_1 - ar_2 \rightarrow r_1 \]
+	\emph{Her bryder jeg algoritmen lidt, og begynder at lave backwards reduction. Det kommer
+	til at hjælpe mig om et par trin}
+	\[ \left[\begin{array}{@{}ccc|c@{}}
+		1	&	0		&	-\frac{6}{-3+a}	& -\frac{a}{-3+a}\\
+		0	&	1		&	\frac{2}{-3+a}	& \frac{-2+a}{-3+a}\\
+		0	&	-a^2+2		&	0		& -a^2
+	\end{array} \right] r_3 - (-a^2+2)r_2 \rightarrow r_3 \]
+	\[ \left[\begin{array}{@{}ccc|c@{}}
+		1	&	0		&	-\frac{6}{-3+a}	& -\frac{a}{-3+a}\\
+		0	&	1		&	\frac{2}{-3+a}	& \frac{-2+a}{-3+a}\\
+		0	&	0		&	2\frac{a^2-2}{-3+a}		& \frac{a^2-2a+4}{-3+a}
+\end{array} \right] \frac{1}{2 - a^2} r_3 \rightarrow r_3 \]
+\emph{Nu får vi glæde af den tidligere ERO. Alt i kolonne 3 går netop op i $A'_{33}$ og kolonnen løses med substitution}
+	\[ \left[\begin{array}{@{}ccc|c@{}}
+		1	&	0		&	-\frac{6}{-3+a}	& -\frac{a}{-3+a}\\
+		0	&	1		&	\frac{2}{-3+a}	& \frac{-2+a}{-3+a}\\
+		0	&	0		&	-\frac{2}{-3+a}	& -\frac{a^2-2a+4}{(-3+a)(a^2-2)}
+\end{array} \right] r_1 - r_3 \rightarrow r_1, \quad r_2 + r_3 \rightarrow r_2 \]
+	\[ \left[\begin{array}{@{}ccc|c@{}}
+		1	&	0		&	0		& -\frac{a^2+4}{a^2 -2}\\
+		0	&	1		&	0		& \frac{a^2}{a^2-2}\\
+		0	&	0		&	-\frac{2}{-3+a}	& -\frac{a^2-2a+4}{(-3+a)\cdot(a^2-2)}
+\end{array} \right] (-(1/2)*(-3+a))r_3 \rightarrow r_3\]
+	\[ \left[\begin{array}{@{}ccc|c@{}}
+		1	&	0		&	0		& -\frac{a^2+4}{a^2 -2}\\
+		0	&	1		&	0		& \frac{a^2}{a^2-2}\\
+		0	&	0		&	1		& \frac{1}{2}\cdot\frac{a^2-2a+4}{a^2-2}
+\end{array} \right] \]
+Vi har nu det løste ligningssystem hvor
+\[ x = \begin{bmatrix}
+		-\frac{a^2+4}{a^2 -2}\\
+		\frac{a^2}{a^2-2}\\
+		\frac{1}{2}\cdot\frac{a^2-2a+4}{a^2-2}
+\end{bmatrix}\]
+
+	\subsection{(b)}
+	Antag nu at $a = \pm\sqrt{2}$. Løs den nye matrice på metoden som før\\
+	Vi kigger på matricen fra forrige opgave:
+	\[ [A|b] = \left[\begin{array}{@{}ccc|c@{}}
+		2	&	3+a	&	2	& 2+a\\
+		1	&	a	&	2	& a\\
+		a	&	2	&	2a	& 0
+	\end{array} \right]\]
+	Vi konkluderer så med rækkeoperationen $r_3 - \sqrt(2)r_2 \rightarrow r_3$ at systemet er
+	inconsistent da $Rank A < Rank [A|b]$:
+	\[ [A|b] = \left[\begin{array}{@{}ccc|c@{}}
+		2	&	3+a	&	2	& 2+a\\
+		1	&	a	&	2	& a\\
+		0	&	0	&	0	& -2
+	\end{array} \right]\]
+
+	\subsection{(c)}
+	Vi så i (A) at ligningssystemet på rækkeechelonform har Rank A = n hvis $a \neq\pm\sqrt{2}$.
+	I bogens Theorem 1.3 står der \emph{"If rank A = n then (S) has a unique solution"}.
+	Derfor er der en og kun en løsning.
+
+	\subsection{(d)}
+	Jeg antager nu $a = -2$ og vil bestemme den inverse matrix til koefficientmatricen $A$ ved
+	hjælp af \verb!COMPUTATION! algoritmen til at udregne $A^{-1}$. Jeg vil dernæst udregne
+	$A^{-1}\cdot\begin{bmatrix}0\\-2\\0\end{bmatrix}$
+
+	Computation siger at for en given $n x n$ matrice at $[A | I_n] \tilde [I_n | A^{-1}]$\\
+	Vi opstiller
+	\[ [A|I_n] = \left[\begin{array}{@{}ccc|ccc@{}}
+			2	&	1	&	2	&	1	&	0	&	0\\
+			1	&	-2	&	2	&	0	&	1	&	0\\
+			-2	&	2	&	-4	&	0	&	0	&	1\\
+	\end{array}\right] r_1 \leftrightarrow r_2, r_2 - 2r_1 \rightarrow r_2, r_3 + 2r_1 \rightarrow r_3\]
+	\[  \left[\begin{array}{@{}ccc|ccc@{}}
+			1	&	-2	&	2	&	0	&	1	&	0\\
+			0	&	5	&	-2	&	1	&	-2	&	0\\
+			0	&	-2	&	0	&	0	&	2	&	1\\
+	\end{array}\right] r_2 \leftrightarrow r_3 \]
+	\[  \left[\begin{array}{@{}ccc|ccc@{}}
+			1	&	-2	&	2	&	0	&	1	&	0\\
+			0	&	-2	&	0	&	0	&	2	&	1\\
+			0	&	5	&	-2	&	1	&	-2	&	0\\
+	\end{array}\right]  2r_3 \rightarrow r_3 \]
+	\[  \left[\begin{array}{@{}ccc|ccc@{}}
+			1	&	-2	&	2	&	0	&	1	&	0\\
+			0	&	-2	&	0	&	0	&	2	&	1\\
+			0	&	10	&	-4	&	2	&	-4	&	0\\
+	\end{array}\right] r_3 + 5r_2 \rightarrow r_3, r_1 - r_2 \rightarrow r_1\]
+	\[  \left[\begin{array}{@{}ccc|ccc@{}}
+			1	&	0	&	2	&	0	&	-1	&	-1\\
+			0	&	-2	&	0	&	0	&	2	&	1\\
+			0	&	0	&	-4	&	2	&	6	&	5\\
+	\end{array}\right] -\frac{1}{2}r_2 \rightarrow r_2, -\frac{1}{4}r_3 \rightarrow r_3\]
+	\[  \left[\begin{array}{@{}ccc|ccc@{}}
+			1	&	0	&	2	&	0	&	-1	&	-1\\
+			0	&	1	&	0	&	0	&	-1	&	-\frac{1}{2}\\
+			0	&	0	&	1	&	-\frac{1}{2}&	-\frac{3}{6}	& -\frac{5}{4}\\
+	\end{array}\right] r_1 - 2r_2 \rightarrow r_1 \]
+	\[  \left[\begin{array}{@{}ccc|ccc@{}}
+			1	&	0	&	0	&	1	&	2	&	\frac{3}{2}\\
+			0	&	1	&	0	&	0	&	-1	&	-\frac{1}{2}\\
+			0	&	0	&	1	&	-\frac{1}{2}&	-\frac{3}{2}	& -\frac{5}{4}\\
+	\end{array}\right]\]
+
+	
+	Vi har derfor \[A' = \begin{bmatrix}
+		1	&	2	&	\frac{3}{2}\\
+		0	&	-1	&	-\frac{1}{2}\\
+		-\frac{1}{2}&	-\frac{3}{2}	& -\frac{5}{4}\\
+	\end{bmatrix}\]
+
+	\[ 0 + 2\cdot -2 + 0 = -4 ; 0 + 4 + 0\]
+	\[A'\begin{bmatrix}0\\-2\\0\end{bmatrix} = \begin{bmatrix}-4\\2\\3\end{bmatrix}\]
+
+	\section{Opgave 2}
+	Vi har en $3 x 3$ matrice $A$ som ved rækkeoperationer $ero_1, ero_2, ero_3, ero_4$ kan
+	omdannes til enhedsmatricen. Vi har
+	\[ ero = \begin{bmatrix}
+			r_2 -4r_1 \rightarrow r_2\\
+			-\frac{1}{5}r_3 \rightarrow r_3\\
+			r_1 \leftrightarrow r_3\\
+			r_1 + 10r_3  \rightarrow r_1
+	\end{bmatrix}\]
+	\subsection{(a)}
+	Vi skal for hver af de fire rækkeoperationer udregne den elementære matrice $E_{ij}$ som
+	svarer til rækkeoperationen. Du finder elementærmatricen ved at udføre rækkeoperationen på
+	Identitetsmatricen $I_3$\\
+	Vi Udregner $E_n$\\
+	\[ E_1 = \begin{bmatrix}1&0&0\\0&1&0\\0&0&1\end{bmatrix} r_2 - 4r_1 \rightarrow r_2 
+	\begin{bmatrix} 1 & 0 & 0 \\ -4 & 1 & 0 \\ 0 & 0 & 0 \end{bmatrix} \]
+	\[ E_2 = \begin{bmatrix}1&0&0\\0&1&0\\0&0&1\end{bmatrix} -\frac{1}{5}r_3 \rightarrow r_3
+	\begin{bmatrix}1&0&0\\0&1&0\\0&0&-\frac{1}{5}\end{bmatrix}\]
+	\[ E_3 = \begin{bmatrix}1&0&0\\0&1&0\\0&0&1\end{bmatrix} r_1 \leftrightarrow r_3 
+	\begin{bmatrix}0&0&1\\0&1&0\\1&0&0\end{bmatrix}\]
+	\[ E_4 = \begin{bmatrix}1&0&0\\0&1&0\\0&0&1\end{bmatrix} r_1 + 10r_3 
+	\begin{bmatrix}1&0&10\\0&1&0\\0&0&1\end{bmatrix}\]
+
+	Der står i lærebogen: "Performing an elementary row operation... accomplished by
+	premultiplying $A$ by an elementary matrix". Altså kan vi sige at hvis vi udfører $ero_1$
+	på matrice $A$ får vi $A' = E_1A$.\\
+
+	Vi ved at vi kommer frem til identitestmatricen $I_3$ hvis vi udfører de fire 
+	rækkeoperationer $ero_n$ på $A$. Vi opstiller derfor $I_3 = A^{''''}$. Vi opstiller nu:
+	\begin{equation}
+	\begin{array}{l @{=} l}
+		A^{'} & E_1A\\
+		A^{''} & E_2(E_1A)\\
+		A^{'''} & E_3(E_2(E_1A))\\
+		A^{''''}& E_4(E_3(E_2(E_1A)))\\
+		I_3 & E_4E_3E_2E_1A
+	\end{array}
+	\end{equation}
+
+	\subsection{(b)}
+	Vi udregner nu for hvert af de fire elemmentærmatricer den inverse matrice $E_n^{-1}$\\
+	For at få den inverse matrix for en elementærmatrice kan vi bruge den inverse
+	rækkeoperation(se Theorem 1.1)\\
+	Vi opstiller(Hvor $F_n$ er $E_n^{-1}$)
+	\[ F_1 = \begin{bmatrix}1&0&0\\0&1&0\\0&0&1\end{bmatrix} r_2 + 4r_1 \rightarrow r_2 
+	\begin{bmatrix} 1 & 0 & 0 \\ 4 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} \]
+	\[ F_2 = \begin{bmatrix}1&0&0\\0&1&0\\0&0&1\end{bmatrix} -5r_3 \rightarrow r_3
+	\begin{bmatrix}1&0&0\\0&1&0\\0&0&-5\end{bmatrix}\]
+	\[ F_3 = \begin{bmatrix}1&0&0\\0&1&0\\0&0&1\end{bmatrix} r_1 \leftrightarrow r_3 
+	\begin{bmatrix}0&0&1\\0&1&0\\1&0&0\end{bmatrix}\]
+	\[ F_4 = \begin{bmatrix}1&0&0\\0&1&0\\0&0&1\end{bmatrix} r_1 - 10r_3 
+	\begin{bmatrix}1&0&-10\\0&1&0\\0&0&1\end{bmatrix}\]
+
+	Vi vil nu gerne bestemme $A$. Det gør vi ved at udføre de inverse matrix operationer på $A$
+	i omvendt rækkefølge. Vi skal derfor udregne $F_1 \cdots F_4 I_3$\\
+	Vi b udregner\footnote{Udregninger udført i Maple\texttrademark}
+	\[ F_1 \cdot F_2 \cdot F_3 \cdot F_4 \cdot I_3 = A = \begin{bmatrix}
+		0&0&1\\0&1&4\\-5&0&50
+	\end{bmatrix}\]
+	For at checke efter udfører vi nu udregningen fra forrige opgave $I_3 = E_4E_3E_2E_1A$
+	\[
+	i_3 = E_4\cdot E_3\cdot E_2\cdot E_1\cdot A = \begin{bmatrix}1&0&0\\0&1&0\\0&0&1\end{bmatrix}
+	\]
+	
+	\subsection{(c)}
+	Vi får nu givet \[B = \begin{bmatrix}0&1\\0&4\\-5&50\end{bmatrix}\] og
+	\[X = \begin{bmatrix}10&0&-\frac{1}{5}\\1&0&0\end{bmatrix}\]
+	Vi skal nu vise at $X$ er venstre invers til $B$:
+	\[XB = \begin{bmatrix}10&0&-\frac{1}{5}\\1&0&0\end{bmatrix} \begin{bmatrix}0&1\\0&4\\-5&50\end{bmatrix}
+		= \begin{bmatrix}
+			-5\cdot -\frac{1}{5} & (1\cdot 10) + (-\frac{1}{5}\cdot 50) \\
+			0 & 1\cdot 1
+		\end{bmatrix} = \begin{bmatrix}1&0\\0&1\end{bmatrix}
+	\]
+	Derudover skal vi finde andre venstreinverse matricer til $B$. Vi kan se på det som en
+	ligning $XB = I_{2}$. Vi kan i dette tilfælde se at identitetsmatricen er $I_2$ da
+	multiplikation af en $n x m$ matrice og en $m x n$ matrice giver en $n x n$ matrice. Vi
+	opstiller:
+	\[\begin{bmatrix}x_1 & x_2 & x_3 \\ x_4 & x_5 & x_6\end{bmatrix}
+	\begin{bmatrix}0&1\\0&4\\-5&50\end{bmatrix} =
+	\begin{bmatrix}
+		-5x_3 	& x_1+4x_2+50x_3	\\
+		-5x_6 	& x_4 + 4x_5 + 50x_6 \\
+	\end{bmatrix} = 
+	\begin{bmatrix}1&0\\0&1\end{bmatrix} \]
+	Vi ser på det som et ligningssystem, og opskriver
+	\[ (S) = \left\{ \begin{array}{cccccc @{= } l}
+		&&-5x_3 & & & & 1\\
+		x_1& +4x_2&+50x_3 &&&& 0\\
+		   &&&&&-5x_6&0\\
+		   &&&x_4&+4x_5&+50x_6&1
+	\end{array}\right. \]
+	Vi sætter så systemet på rækkeechelonform
+	\[\begin{bmatrix}
+		0&0&-5&0&0&0&1\\
+		1&4&50&0&0&0&0\\
+		0&0&0&0&0&-5&0\\
+		0&0&0&1&4&50&1\\
+\end{bmatrix} r_1 \leftrightarrow r_2, r_3 \leftrightarrow r_2, -\frac{1}{5}r_2 \rightarrow r_2, -\frac{1}{5}r_4 \rightarrow r_4\]
+	\[\begin{bmatrix}
+		1&4&50&0&0&0&0\\
+		0&0&1&0&0&0&-\frac{1}{5}\\
+		0&0&0&1&4&50&1\\
+		0&0&0&0&0&1&0\\
+	\end{bmatrix} r_1 - 50 r_2 \rightarrow r_1, r_3 - 50r_4 \rightarrow r_3\]
+	\[\begin{bmatrix}
+		1&4&0&0&0&0&10\\
+		0&0&1&0&0&0&-\frac{1}{5}\\
+		0&0&0&1&4&0&1\\
+		0&0&0&0&0&1&0\\
+	\end{bmatrix} \]
+	Og vi har nu systemet
+	\[
+		\begin{bmatrix}x_1\\x_2\\x_3\\x_4\\x_5\\x_6\end{bmatrix} = 
+		\begin{bmatrix}10\\0\\-\frac{1}{5}\\1\\0\\0\end{bmatrix} + s
+		\begin{bmatrix}-4\\1\\0\\0\\0\\0\end{bmatrix} + t
+		\begin{bmatrix}0\\0\\0\\-4\\1\\0\end{bmatrix}
+	\]
+	Vi skriver nu $X$ op:
+	\[
+	\begin{bmatrix}
+	10-4s & s & -\frac{1}{5}\\ 1 -4t & t & 0
+	\end{bmatrix}
+	\]
+	For at checke efter bruger vi den udleverede matrice $X$ fra tidligere. Der sætter vi 
+	$s = t = 0$ og får:
+	\[
+		\begin{bmatrix}
+			10 & 0 & -\frac{1}{5}\\
+			1 & 0 & 0
+		\end{bmatrix}
+	\] Vi ser hermed at Løsningen er valid\\
+
+
+	Matrice $B$ har derudover ingen højreinvers. Bogens Theorem 2.10 siger at $B$ har en
+	højreinvers hvis
+	og kun hvis matricens rank er lig antal rækker, og der er færre end eller lige så mange 
+	rækker som kolonner. Man kan tydeligt se at matricen er rang 2, og at den har flere rækker
+	end kolonner.\\
+
+	\section{C}
+	Jeg har fået given en DiGraph $G$ med fem knuder. 
+
+	\subsection{(a)}
+	Jeg er blevet bedt om at ræpresentere grafen som en nabomatrice.\\
+	\begin{equation}
+		N = \begin{bmatrix}
+			0 & 1 & 1 & 1 & 0\\
+			0 & 0 & 0 & 1 & 1\\
+			0 & 0 & 0 & 1 & 0\\
+			1 & 0 & 0 & 0 & 1\\
+			1 & 0 & 1 & 0 & 0\\
+		\end{bmatrix}
+	\end{equation}
+
+	Det smarte ved en nabomatrice er at vi kan se hvilke knuder der er forbundet, og dermed
+	hvilke veje af længde $k = 1$ der findes fra knude $i \rightarrow j$. Er vi interreseret i
+	at finde hvor mange veje fra $i \rightarrow j$ med en arbitrær længde $k \in \mathbb{Z}^+$,
+	kan vi aflæse det af $N^k$, hvor hvert komponent $N^k_{ij} = \text{Antal veje fra i til j}$
+	
+	Vil vi læse antal veje fra knude $i = 2$ til knude $j = 5$ af længde $k = 8$ skal vi derfor
+	bruge $N^8$
+	\[
+	N^8 = \begin{bmatrix}
+		228&100&227&144&145\\
+		158&70&158&100&100\\
+		179&79&180&114&113\\
+		179&79&179&114&114\\
+		179&79&179&114&114\\
+	\end{bmatrix}\]
+	Hvor vi kan aflæse $N^8_{25} = 100$
+
+	\subsection{(b)}
+	Denne graf kan bruges til at ræpresentere et web med fem sider. Vi vil nu opstille
+	linkmatricen for denne graf. Det skrives at linkmatricen $A$ har elementer $1/N_j$ hvis der
+	fremkommer en kant fra $i$ til $j$. Vi går igennem matricen og erstatter alle elementer
+	$a = 1$ med $a = \frac{1}{N_j}$ \\
+	\begin{equation}
+		\begin{bmatrix}
+			0&1&\frac{1}{2}&\frac{1}{3}&0\\
+			0&0&0&\frac{1}{3}&\frac{1}{2}\\
+			0&0&0&\frac{1}{3}&0\\
+			\frac{1}{2}&0&1&0&\frac{1}{2}\\
+			\frac{1}{2}&0&\frac{1}{2}&0&0\\
+		\end{bmatrix}
+	\end{equation}
+
+	\subsection{(c)}
+	Til sidst skal vi nu finde en vektor $x \neq 0$ som opfylder ligningen $Ax = x$ og
+	rangordne siderne. $Ax = x$ er noget af en "sjov" ligning, så vi trækker $x$ fra og
+	opstiller $Ax - x = 0$. Dette er som beskrevet i dokumentet Google's page rank.\\
+\[[Ax - x|0_5]\left[\begin{array}{ccccc|c}
+	-1		&1	&\frac{1}{3}	&\frac{1}{2}	&0 		&0\\
+	0		&-1 	&0		&\frac{1}{2}	&\frac{1}{2}	&0\\
+	\frac{1}{3}	&0	&-1		&0		&\frac{1}{2}	&0\\
+	\frac{1}{3}	&0	&\frac{1}{3}	&-1		&0		&0\\
+	\frac{1}{3}	&0	&\frac{1}{3}	&0		&-1		&0\\
+\end{array}\right]6r_1, 2r_2, 6r_3, 3r_4, 3r_5\]
+
+$ero_1: r_4 \leftrightarrow r_1$\input{echelons/ero1.tex}
+$ero_2: r_3 - 2r_1 \rightarrow r_3, r_4 + 6r_1 \rightarrow r_4, r_5 -1r_1\rightarrow r_5$\input{echelons/ero2.tex}
+$ ero_3: r_4 + 3r_2 \rightarrow r_4$\input{echelons/ero3.tex}
+$ero_4: r_4 + r_3 \rightarrow r_4$ \input{echelons/ero4.tex}
+$ ero_5: \frac{1}{6}r_4 \rightarrow r_4, r_5 + 3r_4 $\input{echelons/ero5.tex}
+	Vi er nu på rækkeechelonform\\\input{echelons/rre.tex}
+
+	Vi opstiller følgende transformationer:\\
+$r_3 + \frac{3}{4}r_4 \rightarrow r_3, r_2 + \frac{1}{2}r_4 \rightarrow r_2, r_1 + 3r_4 \rightarrow r_1$\input{echelons/rre1.tex}
+$r_1 -1r_3 \rightarrow r_1$\input{echelons/rre2.tex}
+
+	Vi skriver nu løsningssystemet op:
+\[
+	\begin{bmatrix}x_1\\x_2\\x_3\\x_4\\x_5\end{bmatrix} =
+	t\cdot \begin{bmatrix}\frac{15}{8}\\1\\\frac{9}{8}\\1\\1\end{bmatrix}
+\]
+	Vi kan derved aflæse skoren af de forskellige sider, og sætter dem i følgende rækkefølge:
+	$x_1 > x_3 > x_2 = x_4 = x_5$ altså, den side med højest skore er $x_1$
+
+\end{document}

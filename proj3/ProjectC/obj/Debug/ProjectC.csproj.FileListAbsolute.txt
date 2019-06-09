@@ -1,0 +1,6 @@
+/home/cpj/UNI/blok4/linalg/proj3/ProjectC/bin/Debug/ProjectC.exe
+/home/cpj/UNI/blok4/linalg/proj3/ProjectC/bin/Debug/ProjectC.pdb
+/home/cpj/UNI/blok4/linalg/proj3/ProjectC/obj/Debug/ProjectC.csprojAssemblyReference.cache
+/home/cpj/UNI/blok4/linalg/proj3/ProjectC/obj/Debug/ProjectC.csproj.CoreCompileInputs.cache
+/home/cpj/UNI/blok4/linalg/proj3/ProjectC/obj/Debug/ProjectC.exe
+/home/cpj/UNI/blok4/linalg/proj3/ProjectC/obj/Debug/ProjectC.pdb

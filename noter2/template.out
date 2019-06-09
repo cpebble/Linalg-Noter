@@ -1,0 +1,48 @@
+\BOOKMARK [0][-]{chapter.1}{Uge 2: 30/04}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Kvadratiske matricer}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{Inversible matricer}{chapter.1}% 3
+\BOOKMARK [2][-]{subsection.1.2.1}{Theorem p. 85}{section.1.2}% 4
+\BOOKMARK [2][-]{subsection.1.2.2}{Def 2.8}{section.1.2}% 5
+\BOOKMARK [2][-]{subsection.1.2.3}{Theorem 2.4}{section.1.2}% 6
+\BOOKMARK [1][-]{section.1.3}{Bestemmelse af invers ved r\346kkeoperationer}{chapter.1}% 7
+\BOOKMARK [0][-]{chapter.2}{07/05}{}% 8
+\BOOKMARK [1][-]{section.2.1}{Vekrorrummet Rn}{chapter.2}% 9
+\BOOKMARK [1][-]{section.2.2}{Underrum}{chapter.2}% 10
+\BOOKMARK [1][-]{section.2.3}{Span}{chapter.2}% 11
+\BOOKMARK [1][-]{section.2.4}{Line\346r uafh\346ngighed}{chapter.2}% 12
+\BOOKMARK [1][-]{section.2.5}{Baser}{chapter.2}% 13
+\BOOKMARK [2][-]{subsection.2.5.1}{Standardbasen for Rn har en basis}{section.2.5}% 14
+\BOOKMARK [0][-]{chapter.3}{09/05}{}% 15
+\BOOKMARK [1][-]{section.3.1}{Koordinater}{chapter.3}% 16
+\BOOKMARK [2][-]{subsection.3.1.1}{Basisskiftmatricen}{section.3.1}% 17
+\BOOKMARK [2][-]{subsection.3.1.2}{Den inverse til basisskift matrice}{section.3.1}% 18
+\BOOKMARK [1][-]{section.3.2}{Nulrum}{chapter.3}% 19
+\BOOKMARK [1][-]{section.3.3}{S\370jlerummet}{chapter.3}% 20
+\BOOKMARK [1][-]{section.3.4}{R\346kkerum}{chapter.3}% 21
+\BOOKMARK [1][-]{section.3.5}{Line\346re transformationer}{chapter.3}% 22
+\BOOKMARK [2][-]{subsection.3.5.1}{Sammens\346tning af line\346re transformationer}{section.3.5}% 23
+\BOOKMARK [1][-]{section.3.6}{Kerne}{chapter.3}% 24
+\BOOKMARK [0][-]{chapter.4}{14/05}{}% 25
+\BOOKMARK [1][-]{section.4.1}{Prikprodukt}{chapter.4}% 26
+\BOOKMARK [2][-]{subsection.4.1.1}{Norm}{section.4.1}% 27
+\BOOKMARK [1][-]{section.4.2}{enhedsvektor}{chapter.4}% 28
+\BOOKMARK [1][-]{section.4.3}{Euklidisk afstand}{chapter.4}% 29
+\BOOKMARK [1][-]{section.4.4}{Vinklen mellem to vektorer}{chapter.4}% 30
+\BOOKMARK [1][-]{section.4.5}{Ortogonale vektorer og pythagoras}{chapter.4}% 31
+\BOOKMARK [1][-]{section.4.6}{Ortogonal projektion}{chapter.4}% 32
+\BOOKMARK [2][-]{subsection.4.6.1}{\370velse}{section.4.6}% 33
+\BOOKMARK [1][-]{section.4.7}{Projektionsmatricen}{chapter.4}% 34
+\BOOKMARK [1][-]{section.4.8}{Ortonormale baser}{chapter.4}% 35
+\BOOKMARK [1][-]{section.4.9}{Ortogonale Matrice}{chapter.4}% 36
+\BOOKMARK [2][-]{subsection.4.9.1}{Ortogonale line\346re transformationer}{section.4.9}% 37
+\BOOKMARK [0][-]{chapter.5}{16/05}{}% 38
+\BOOKMARK [1][-]{section.5.1}{Ortogonal komplement}{chapter.5}% 39
+\BOOKMARK [1][-]{section.5.2}{Ortogonal projektion}{chapter.5}% 40
+\BOOKMARK [1][-]{section.5.3}{Gram-Schmidt processen}{chapter.5}% 41
+\BOOKMARK [1][-]{section.5.4}{QR faktorisering}{chapter.5}% 42
+\BOOKMARK [1][-]{section.5.5}{Mindste kvadraters metode}{chapter.5}% 43
+\BOOKMARK [0][-]{chapter.6}{forlasning 11}{}% 44
+\BOOKMARK [1][-]{section.6.1}{Diagonalisering af matricer}{chapter.6}% 45
+\BOOKMARK [1][-]{section.6.2}{Lidt teori}{chapter.6}% 46
+\BOOKMARK [1][-]{section.6.3}{En metode}{chapter.6}% 47
+\BOOKMARK [1][-]{section.6.4}{\330velse}{chapter.6}% 48

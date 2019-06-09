@@ -1,0 +1,604 @@
+\documentclass[a4paper,fleqn]{article}
+\title{Rapport}
+\author{P\aa b\o l}
+
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\usepackage[danish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{lastpage}
+\usepackage{lipsum}
+\usepackage[colorlinks, linkcolor=black]{hyperref}
+\usepackage{listings}
+\usepackage{upquote}
+\usepackage[most]{tcolorbox}
+
+\definecolor{bluekeywords}{rgb}{0.13,0.13,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{redstrings}{rgb}{0.9,0,0} 
+\newcommand{\hmwkTitle}{} % Assignment title
+\newcommand{\hmwkDueDate}{} % Due date
+\newcommand{\hmwkClass}{} % Course/class
+\newcommand{\hmwkClassInstructor}{Lærer: } % Teacher/lecturer
+\newcommand{\hmwkAuthorName}{Christian P\aa b\o l} % Your name
+\newcommand{\hmwkProblem}{Problemformulering: \emph{text}}
+
+% Big fugly math letters
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\U}{\mathcal{U}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+
+%% Theorems and examples
+\newtcbtheorem[auto counter,number within=section]{theorem}%
+  {Theorem}{fonttitle=\bfseries\upshape, fontupper=\slshape,
+     arc=0mm, colback=blue!5!white,colframe=blue!75!black}{theorem}
+\newtcbtheorem[auto counter, number within=section]{definition}%
+  {Definition}{fonttitle=\bfseries\upshape, fontupper=\slshape,
+     arc=0mm, colback=red!5!white,colframe=red!75!black}{definition}
+\newtcbtheorem[auto counter, number within=section]{example}%
+  {Example}{fonttitle=\bfseries\upshape, fontupper=\slshape,
+     arc=0mm, colback=green!5!white,colframe=green!75!black}{example}
+
+\addtolength{\oddsidemargin}{-.875in}
+\addtolength{\evensidemargin}{-.875in}
+\addtolength{\textwidth}{1.75in}
+\setlength{\parindent}{0in}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName} % Top left header
+\chead{\hmwkClass\ : \hmwkTitle} % Top center head
+\rhead{\rightmark}
+\cfoot{} % Bottom center footer
+\rfoot{Page\ \thepage\ of\ \protect\pageref{LastPage}} % Bottom right footer
+
+\title{
+	\vspace{2in}
+	\textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+	\normalsize\vspace{0.1in}\small{Afleveres:\ \hmwkDueDate}\\
+	\vspace{0.1in}\large{\textit{\hmwkClassInstructor}}\\
+	\normalsize\vspace{0.5in} \hmwkProblem  \\
+	\vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+
+\begin{document}
+	\maketitle
+	\newpage
+	\tableofcontents
+	\setcounter{page}{1}
+	\section{1}{Lineære systemer}
+	\subsection{1.1 - At løse lineære ligninssystemer}
+	Lineært system: \[ a_1 \cdot x_1 + \dots + a_n \cdot x_n = b \]
+	\begin{definition}{Inconsistent, consistent, solving}{}
+		Hvis et lineært system $(S)$ ikke har nogen løsning, kalder vi $(S)$ inkonsistent.
+		Hvis $(S)$ har en eller flere løsninger kalder vi det konsistent.
+		At løse $(S)$ betyder at finde løsningssættet til $(S)$ eller at bedømme $(S)$ som
+		inkonsistent
+	\end{definition}
+	\begin{example}{Forward Elimination, Replacement}{}
+		Vi kigger på det følgende system 
+		\[
+			(S) \left\{\begin{array}{rr}
+					x_1 + x_2 + x_3 = 1 & E_1\\
+					2x_1 - 2x_2 - x_3 = 0 & E_2\\
+					-x_1+3x_2+7x_3 = 0 & E_3\\
+			\end{array}\right. 
+		\]
+		Vi løser $E_1$ for den ledende ukendte $x_1$ som følger:
+		\[ x_1 + x_2 + x_3 = 1 \Rightarrow x_1 = 1 - x_2 - x_3\]
+		Og den bliver substitueret ind i alle ligninger under $E_1$. Vi får som følger
+		\[
+			(S) \left\{\begin{array}{rr}
+					1x_1 + 1x_2 + 1x_3 = +1 & E_1\\
+					- 4x_2 - 3x_3 = -2 & E_2\\
+					+4x_2+8x_3 = +1 & E_3\\
+			\end{array}\right. 
+		\]
+		De to substitutioner har nu elimineret den ukendte $x_1$ fra elle ligninger under
+		$E_1$.\\
+		Processen at "løse" ligninger vha. substitution kan komineres ind i en operation
+		kaldet Replacement. Det skrives sådan:\\
+		Ligning $E_2$ minus 2 gange $E_1$ $E_2 - 2E_1$
+	\end{example}
+	\begin{definition}{Ekvivalente lineære systemer}{}
+		XTo lineære systemer $(S), (S)''$ er ekvivalente hvis $(S)''$ er resultatet af
+		en eller flere elementære ligningsoperationer på $(S)$ og vi skriver $(S)\sim(S)'$
+		for at vise ekvivalæns
+	\end{definition}
+	
+	\begin{theorem}{Fundamental egenskab af ekvivalente ligningssystemer}
+		Hvis $(S)$ og $(S)'$ er to ekvivalente lineære systemer så har de præcis samme
+		løsningssæt.\\
+
+		Det er nemt at vise at enhver EEOs handling på et lineært system ikke ændrer
+		løsningen til det lineære system. Derfor, hvis $(S)\sim(S)'$, så er enhver
+		løsning til $(S)$ også en løsning til $(S)'$. Det bemærkes at der for hver EEO
+		findes en invers EEO og derfor kan du finde tilbage til $(S)$ fra $(S)'$ som
+		følger
+		\[
+			\begin{array}{rc @{\rightarrow} r c @{\rightarrow} l}
+			& \mathbf{EEO} & & \mathbf{Invers\ EEO} & (S)\\
+			(S) & E_i-mE_j \rightarrow E_i & (S)'&E_i + mE_j \rightarrow E_i &(S)\\
+			(S) & E_i \leftrightarrow E_j & (S)'&E_i \leftrightarrow E_j &(S)\\
+			(S) & cE_i \rightarrow E_i & (S)'& \frac{1}{c}E_i \rightarrow E_i &(S)\\
+			\end{array}
+		\]
+	\end{theorem}
+	\begin{definition}{Matrix, rækkevektor, kolonnevektor}{}
+		Lad $m$ og $n$ være positive tal. En $m x n$ vektor er en rektangulær array
+		af $m\cdot n$ tal, arrangeret i $m$ rækker og $n$ kolonner. Tal i en matrix kaldes
+		indgange.\\
+		En $m x 1$ (m rækker en kolonne) kaldes en kolonnevektor
+	\end{definition}
+	Matricer er noteret ved store bogstaver $A, B, C,\dots M, N$ og vektorer $a,b,c,\dots,u,v$
+
+	\begin{definition}{Rækkeekvivalenthed i matricer}{}
+		To matricer $M$ og $M'$ kaldes rækkeekvivalente hvis der er en finit sekvens af
+		elmentære rækkeoperationer der ændrer en matrix til den anden matrix. Vi skriver
+		$M \sim M'$ når det er tilfældet
+	\end{definition}
+	\begin{example}{Solving a Linear System using Matrices}{}
+		Vi bruger nu Gauss-Jordan elimination til at løse $3x4$ systemet nedenfor.
+		Opstiller ligninssystemet og den tilhørende matrix\\
+		\[
+			(S)\left\{\begin{array}{c}
+					1x_1+2x_2+x_3+3x_4=4\\
+					3x_1+6x_2+5x_3+10x_4=0\\
+					5x_1+10x_2+7x_3+17x_4\\
+			\end{array}\right.
+		\]\[
+			M = \begin{bmatrix}
+				1&2&1&3& 4\\
+				3&6&5&10&0\\
+				5&10&7&17&23\\
+	\end{bmatrix}\]$r_2-3r_1,r_3-5r_1, r_3-r_2$ \[
+	M' = \begin{bmatrix}
+		1&2&1&3&4\\
+		0&0&2&1&-12\\
+		0&0&0&1&15\\
+	\end{bmatrix}\]
+	Vi ser her at ligningssystemet er konsistent, da der ikke er nogen rækker 
+	$[ 0, 0, 0, 0, b ]$. Vi laver bagud-elimination(Skalerer pivot til 1 imens)\\
+	$ r_2 - r_3, r_1 - 3r_3, \frac{1}{2}r_2 \rightarrow r_2, r_1 - r_2$
+	\[ M^* \begin{bmatrix}
+			1&2&0&0&-27.5\\
+			0&0&1&0&-13.5\\
+			0&0&0&1&15\\
+	\end{bmatrix}\]
+	Ligningssystemet ser således sådan ud:
+	\[
+		S^* \left\{\begin{array}{c}
+				1x_1 + 2x_2 = -27.5\\
+				1x_3 = -13.5\\
+				1x_4 = 15\\
+		\end{array}\right.
+	\]
+	Der er her uendeligt mange løsninger på $S$, som kan opskrives:
+	\[(x_1, x_2, x_3, x_4) = (-27.5-2t, t, -13.5, 15)\]
+	\end{example}
+
+	\subsection{1.2 Echelonformer og rank}
+	\begin{definition}{Row echelon form}{}
+		En matrix $U$ er i rækkeechelonform hvis følgende er mødt
+		\begin{itemize}
+			\item[(a)] Alle ikkenul rækker i $U$ ligger over enhver nulrække
+			\item[(b)] Den første ikkenul indgang(pivot) i en ikke-nulrække ligger til højre for enhver
+				pivot i rækken direkte over den
+		\end{itemize}
+	\end{definition}
+	\begin{definition}{Reduceret rækkeechelonform}{}
+		En matrix er i reduceret rækkeechelonform hvis to kriterier er mødt
+		\begin{itemize}
+			\item[(a)] Matricen allerede er i echelonform
+			\item[(b)] I enhver pivotsøjle har pivotværdien 1, og alle andre indgange
+				i søjlen er nul
+		\end{itemize}
+	\end{definition}
+	\begin{theorem}{Uniqueness of reduced row echelon forms}{}
+		Enhver Matrice $M$ har en reduceret rækkeechelonform $M^*$ der er unik
+	\end{theorem}
+	\begin{definition}{Lineære systemer i øvretriangulære former}{}
+		Et lineært system er i øvre triangulær form, hvis dens augmenterede matrice
+		er i echelonform\\
+		Et lineært system er i reduceret trekantsform hvis dens augmenterede matrice er
+		i Reduceret rækkeechelonform
+	\end{definition}
+
+	\begin{definition}{Matricers Rank}{}
+		Lad $A$ være en $mxn$ matrice. Ranken af $A$ denoteret "rank A" er antal ikkenul
+		rækker i en echelonform af $A$. Vi skriver $rank A = r$
+	\end{definition}
+	Vi observerer mht. Rank, at da ikke-nulrækker i en matrix på rre ligger over alle nulrækker
+	og enhver ikke-nulrække har en pivotsøjle. Derfor kan det siges at for matrix $R,U$ hvor
+	$U$ er en rækkeechelonform af $S$
+	\begin{equation*}
+		\begin{array}{ll}
+			r &= antal\ ikkenulrækker\ i\ $U$\\
+			  &= Antal\ pivotsøjler\ i\ $U$\ og\ $A$
+		\end{array}
+	\end{equation*}
+	Vi ser
+	\[ rank\ A \leq m \qquad rank\ A \leq n \]
+	Fra det konkluderer vi
+	\[ rank\ A \leq min\{m,n\} \]
+	\begin{theorem}{Klassificering af løsninger}{}
+		Lad $(S)$ være et m x n lineært løsningsystem, repræsenteret af sit m x (n+1) 
+		augmenterede matrix $M =[A|b]$. Så er der kun et af følgende cases der kan opstå
+		\begin{itemize}
+			\item[Case a] Hvis rank A $<$ rank $M$ så  er (S) inkonsistent
+			\item[Case b] Hvis rank A $=$ rank $M$ = $n$ så er der en og kun en løsning
+			\item[Case c] Hvis rank A $=$ rank $M$ $< n$ Så er der uendeligt mange
+				løsninger til $(S)$
+		\end{itemize}
+	\end{theorem}
+	\begin{theorem}{Underdeterminerede lineære systemer}
+		Et $m x n$ lineært system hvor $m < n$ er enten inkonsistent eller har uendeligt
+		mange løsninger. Hvis $rank\ A = m$ så har S uendelig mange løsninger, for hver
+		kolonne af konstanter $b$
+	\end{theorem}
+	\begin{theorem}{Kvadratiske lineære systemer}
+		En n x n lineært system hvor $rank\ A = n$ har en og kun en unik løsning for hver
+		kolonne af konstanter $b$
+	\end{theorem}
+
+
+	\section{2 Matricer}
+	\subsection{Matrix Algebra}
+	\begin{definition}{Lighed i matricer}{}
+		To M x n matricer $A = [a_{ij}], B = [b_{ij}]$ er ens hvis det gælder
+		\[ A_{ij} = B_{ij} \quad\forall i,j \in \{ 0, \dots, m\}, \{ 0 \dots, n\} \]
+	\end{definition}
+	\begin{definition}{Matrix Addition}
+		Summen af to mxn matricer er den $m x n$ matrice $A + B = [a_{ij} + b_{ij}]$. Den
+		er parvid
+	\end{definition}
+	\begin{definition}{Scalar multiplication}{}
+		Lad $A = [a_{ij}]$ være en m x n matrix. Matrixen $sA = [sa_{ij}]$
+	\end{definition}
+	\begin{theorem}{Algebraiske regler for addition og smul}{}
+		Der gælder følgende regler for matriverne $A,B,C$ der er i $\RR^{mxn}$ Lad O
+		være m x n nulmatricen og lad $s,t$ være enhver reel skalar.
+		\begin{enumerate}
+			\item A + B = B + A
+			\item (A + B) + C = A + (B + C)
+			\item A + O = A
+			\item A + (-A) = O = -A + a
+			\item s(A + B) = sA + sB
+			\item (s + t) A = sA + tA
+			\item s(tA) = t(sA) = (st)A
+			\item 1A = A
+		\end{enumerate}
+	\end{theorem}
+	\begin{definition}{Matrix Multiplikation}{}
+		Lad $A = [a_{ij}]$ være en $m x n$ matrice og lad $B = [b_{ij}$ være en $n x p$
+		matrice. Produktet $AB$ er en $m x p$ matrice $C = [c_{ij}]$ hvor det gælder at
+		$c_{ij}$ indgangen i C er summen af rækken $A_i$ gange kolonnen $B_j$. Så det er
+		\[ c_{ij} = a_{i1}b_{1j} + a_{i2}b_{2i} + \cdots + a_{in} b_{nj} \]
+		Også kaldet række gange kolonne multiplikation
+	\end{definition}
+	\begin{theorem}{Unikhed af identitetsmatrice}{}
+		Der er kun en identitetsmatrice $I_n$ i et sæt af $\RR^n$ kvadratmatricer.
+	\end{theorem}
+	\begin{definition}{Blockmatricer}{}
+		Definitionen af en blockmatrice er at du fucked hvis du får en
+	\end{definition}
+	\begin{definition}{Symmetri, skewsymmetri}{}
+		En n x nvmatrixe $A$ er kaldet symmetrisk hvis $A^T = A$ og skewsymmetrisk hvis
+		$A^T = -A$
+	\end{definition}
+
+	\subsection{Inverser}
+	\begin{definition}{Inverse af en kvadratisk matrix}{}
+		En n x n matrix $A$ er invertibel hvis der er en n x n matrix $X$ som opfylder
+		følgende krav: \[AX = I_n \quad \text{ og }\quad XA = I_n\]
+	\end{definition}
+	\begin{theorem}{Inverser er unikke}{}
+		Lad $X$ være en invers af n x n matricen $A$. Så er $X$ den eneste matrice der
+		opfylder ligningen fra deg 2.7
+	\end{theorem}
+	\begin{definition}{Højreinvers, Venstreinvers}
+		En matrix $X$ kaldes højreinvers for $n x n$ matricen A, hvis $AX = I_n$ og 
+		venstreinvers hvis $XA = I_n$
+	\end{definition}
+
+	\begin{example}{En computationel tilgang til at finde inverser}{}
+		Vi observerer den kvadratiske matrix $A$ i sættet $\RR^{3x3}$ vist på venstre
+		\[A = \begin{bmatrix}
+				1 & -2 & 1\\
+				2 & 1 & 2\\
+				3 & 0 & -1\\
+		      \end{bmatrix} I_3 = \begin{bmatrix}
+				1&0&0\\
+				0&1&0\\
+				0&0&1\\
+		      \end{bmatrix}
+		\]
+		Som skridt et kigger vi efter en højreinvers til $A$; altså en matrixe $AX = I_3$.
+		Vi skriver den ukendte matrix $X$ og identitetsmatricen $I$ i form af kolonnevektor
+		$X = [x_1 x_2 x_3]$ og $I = [e_1 e_2 e_3]$ Og overvejer at løse $AX = I$. Bruger
+		vi matrix-kolonnevektor vector mult, får vi 
+		\[ AX = A[x_1 x_2 x_3] = [Ax_1\ Ax_2\ Ax_3] = [e_1\ e_2\ e_3] = I_3\]
+		Og ved at sætte ligheder i den tredie lighed, får vi
+		\[ Ax_1 = e_1,\quad Ax_2 = e_2,\quad Ax_3 = e_e \]
+		Så at løse $AX=I$ er det samme som at løse tre lineære systemer med samme
+		coefficientmatrix $A$, for løsninger $x_1, x_2, x_3$. Ligninger løses nu simultant
+		ved at forme matricen $[A|I_3]$ og reducere $A$ til sin reducerede form $A^*$.
+		Vi har
+		\[ [A|I_3] = \left[ \begin{array}{rrr|rrr}
+					1 & -2&1&1&0&0\\
+					2&1&2&0&1&0\\
+					3&0&-1&0&0&1\\
+				\end{array}
+		\right]\]
+		\[\begin{array}{c}
+				\sim\\
+				r_2 - 2r_1 \rightarrow r_2\\
+				r_3 - 3r_1 \rightarrow r_3 \\
+				\frac{1}{5}5_2 \rightarrow r)2\\
+				r_3 - 6r_2 \rightarrow r_3\\
+				r_1 + 2r_2 \rightarrow r_2\\
+				-\frac{1}{4}r_3 \rightarrow r_3
+				r_1 - r_3 \rightarrow r_1\\
+				\sim
+		\end{array}\]
+		\[ [A|I_3]^* = \left[ \begin{array}{rrr|rrr}
+				1&0&0&\frac{1}{20}&\frac{2}{20}&\frac{5}{20}\\
+				0&1&0&-\frac{8}{20}&\frac{4}{20}&0\\
+				0&0&1&\frac{3}{20}&\frac{6}{20}&-\frac{5}{20}\\
+		\end{array}\right]\]
+		Vi har derfor vores højreinvers
+		\[
+			X = [x_1 x_2 x_3] = \begin{bmatrix}
+				\frac{1}{20}&\frac{2}{20}&\frac{5}{20}\\
+				-\frac{8}{20}&\frac{4}{20}&0\\
+				\frac{3}{20}&\frac{6}{20}&-\frac{5}{20}\\
+			\end{bmatrix}
+		\]
+		Udregningen viser os at $A^* = I_3$ og derfor $rank A$ , hvilket antyder at
+		enhvert system der kan der kan laves til identitetsmatricen uden inkonsistens, har
+		en unik løsning, og $X$ er derfor en unik højreinvers for $A$. Det er generelt nok
+		til at vi kan sige
+	\end{example}
+	\begin{example}{Computation}{}
+		Givet en n x n matrice $A$ således at rank $A$ = n. giver reduktionen \[[A|I_n] \sim
+		[I_n | X]\]
+		en unik højreinvers til $A$
+	\end{example}
+	\begin{theorem}{En unik højreinvers er også en venstreinvers}{}
+		Hvis $A$ er kvadratisk og der er en unik matrix $X$ så $AX = I_n$ så er $XA = I_n$
+		og X er derfor $X = A^{-1}$\\
+	\end{theorem}
+	\begin{theorem}{Rankg og invertibilitet}{}
+		Lad $A$ være en n x n matrix. Hvis rank A = n så er a invertibel
+	\end{theorem}
+	\begin{theorem}
+		En n x n matrix $A$ er invertibel, hvis og kun hvis $rank A = n$ 
+	\end{theorem}
+	\begin{definition}{Elementarmatricer}{}
+		en $m x m$ matrice $E$ kaldes elementær hvis det er resultatet af at udføre en
+		enkelt elementaroperation på identitetsmatricen
+	\end{definition}
+	\begin{theorem}{Elementarrækkeroperationer og matrixmultiplikation}{}
+		Gå ud fra at en enkelt rækkeoperation er udført på en $m x n$ matrix $A$, og 
+		resultatet er $B$. Hvis $E$ er den elementarmatrice tilsvarende til den udført på
+		$A$ så gælder det $EA = B$
+	\end{theorem}
+	\begin{theorem}{Elementarmatricer er invertible}{}
+		For enhver elementarmatrice $E$ eksisterer der en tilsvarende elementarmatrice $F$
+		så $FE = EF = I$ og derfor $F = E^{-2}$
+	\end{theorem}
+	\begin{example}{Operationer på inverse}{}
+		Lad $A$ $B$ være nxn matricer.
+		\begin{itemize}
+			\item Hvis $A$ er invertibel så er $A^{-1}$ invertibel og 
+				$\left(A^{-1}\right)^{-1}$
+			\item Hvis $A$ og $B$ er invertible, så er $AB$ invertibel og
+				$(AB)^{-1} = B^{-1}A^{-1}$
+			\item Hvis A er invertibel, så er $sA$ invertibel for enhver $s \neq 0$ og
+				\[ (sA)^{-1} = s^{-1}A^{-1} \]
+			\item A er invertibel hvis og kun hvis $A^T$ er invertibel, og $(A^T)^{-1}=
+				(A^{-1})^T$
+		\end{itemize}
+	\end{example}
+	\begin{theorem}{Kvadratisk Matrix invertibility}{}
+		Lad $A$ nxn og $I$ identitetsmatricen. De følgende udsagn er ekvivalente
+		\begin{itemize}
+			\item A er invertibel
+			\item Der er en matrix $X$ så $XA = I$
+			\item Ligningen $Ax = b$ har en unik løsning $x$ for hver $b$
+			\item Ligningen $Ax = 0$ har kun nulløsningen $Ax = 0$
+			\item Rank A = n
+			\item Den reducerede rækkeechelonform af $A$ er $I$
+			\item $A$ er produkt af elementarmatricer
+			\item Der er en matrix $X$ således at $AX = I$
+		\end{itemize}
+	\end{theorem}
+	\begin{theorem}{Existenskriterier for Venstre- og højreinverser}{}
+		Lad $A$ være en $m x n$ matrice så rank A = $r$
+		\begin{itemize}
+			\item A har en højreinvers hvis og kun hvis $r = m$ og $m \leq n$
+			\item B har en venstreinvers hvis og kun hvis $r = n$ og $n \leq m$
+
+		\end{itemize}
+	\end{theorem}
+	\section{3 Vectors}
+	\subsection{Vektorrum}
+	\begin{definition}{Rum i $\RR^n$}{}
+		Det reele talsystem er denoteret af symbolet $\RR$. For hvert positivt tal
+		$n = a,2,\dots$ noterer symbolet $\RR^n$ settet af alle $n x 1$ matricer, med
+		reele indgange. Et object i $\RR^n$ kaldes en kolonnevektor, og dens indgange
+		kaldes komponenter
+	\end{definition}
+	\begin{theorem}{Algebraiske regler af Vector Algebra}{}
+		Lad $u,v,w$ være vektorer i $\RR^n$, $0$ den unikke nulvektor og $s,t$ enhver reel
+		skalar. Så gælder følgende regler:
+		\begin{enumerate}
+			\item $u + v = v + u$
+			\item $(u+v)+w = u + (v + w)$
+			\item $v + 0 = v$
+			\item $v + (-v) = 0$
+			\item $s(u+v) = su+sv$
+			\item $(s+t)v = sv + tv$
+			\item $s(tv) = t(sv) = (st)v$
+			\item $1v = v$
+		\end{enumerate}
+	\end{theorem}
+	\begin{definition}{Underrum}{}
+		Lad sættet $\U$ være et sæt med et eller flere vektorer i $\RR^n$. Så er $\U$ et
+		underrum hvis de følgende kriterier er mødt:
+		\begin{enumerate}
+			\item Hvis $u$ og $v$ er i $\U$ så tilhører $u+v$ også $\U$.\\
+				Man siger de holder under addition
+			\item Hvis $u$ er i $\U$ så er $su \in \U$\\
+				Lukket under skalarmultiplikation
+		\end{enumerate}
+	\end{definition}
+	\begin{definition}{Lineær combination. Span}{}
+		Hvis $\mathcal{S} = \{ v_1, v_2, \dots, v_k\}$ er et sæt af vektorer i $\RR^n$
+		og $x_1, x_2, \dots, x_k$ er et sæt af skalarer så er udtrykket
+		\[ X_1v_1 + \dots + x_kv_k \] Kaldet en lineær kombination af $v_1, v_2 \dots$ ved
+		skalarerne $x_k$. Sættet af lineære kombinationer som $x_{\dots}$ der rækker over 
+		alle mulige reelle værdier, kaldes $span$ af $v_1, v_2, \dots v_k$ og er denoteret
+		\[ span \{ v_1, v_2, \dots, v_k\} \quad \text{Eller}\quad span \mathcal{S} \]
+	\end{definition}
+	\begin{theorem}{Spannet af et set af vektorer er et underrum}{}
+		Hvis $S = \{ v_1, v_2, \dots, v_k\}$ er et sæt af vektorer i $\RR^n$ så er span S
+		et underrum af $\RR^n$
+	\end{theorem}
+	\begin{definition}{Udspændende sæt}{}
+		Lad $\U$ være et underrum af $\RR^n$ og lad $S$ være et finit underrum af $\U$.
+		Hvis span $S = \U$ så er S et omspændende sæt af $\U$
+	\end{definition}
+	\subsection{Lineær uafhængighed, baser, dimension}
+	\begin{definition}{Lineær uafhængighed, afhængighed}{}
+		Et sæt af vektorer $S = \{ v_1, v_2, \dots, v_k\}$ i $\RR^n$ er lineært uafhængige
+		hvis ligningen $x_1 v_1 + x_2 v_2 + \dots + x_k v_k = 0$ kun har nulløsningen
+		\[ x_1, x_2, \dots, x_k = (0,0,\dots,0) \]
+		S er lineært afhængigt hvis ligningen har en ikkenulløsning, hvor ihvertfald en af
+		skalarerne $x$ er ikkenul
+	\end{definition}
+	\begin{theorem}{Karakterisering af lineær afhængighed}{}
+		Et sæt af vektorer $S = \{ v_1, v_2, \dots, v_k\}$ i $\RR^n$ er lineært afhængigt
+		hvis og kun hvis ihvertfald en vektor er en lineær kombination af andre vektorer i
+		$S$
+	\end{theorem}
+	\begin{theorem}{Lineært afhængige kolonner, rank}{}
+		Lad $A = [v_1\ v_2\ \dots\ v_k]$ være en nxk matrix. Så er følgende udsagn
+		ekvivalente
+		\begin{itemize}
+			\item Kolonner i $A$ er lineært afhængige
+			\item rank A = k
+		\end{itemize}
+	\end{theorem}
+	\begin{theorem}{Invertibilitet og lineær afhængighed}{}
+		En n x n matrix er invertibel hvis og kun hvis dens kolonner er lineært uafhængige
+	\end{theorem}
+	\begin{theorem}{Antallet af vektorer i et lineært uafhængigt sæt}{}
+		Hvis sættet $s = \{ v_1, v_2, \dots, v_k\}$ er lineært afhængigt, så er $k \leq n$
+	\end{theorem}
+	Vigtige fakta:
+	\begin{itemize}
+		\item Ethvert set $S$ i $\RR^n$ der indeholder nulvektoren er lineært afhængigt
+		\item Et set $S = \{v\}$ der indeholder en enkelt ikkenulvektor $v$ er uafhængigt
+		\item To vektorer i $\RR^n$ er et afhængigt sæt hvis og kun hvis en vektor er 
+			en skalarmultipel af den anden
+		\item Ethvert underset af lineært uafhængige vektorer er lineært uafhhængige
+		\item Et endeligt sæt af vektorer der indeholder et lineært afhængigt underset er
+			lineært afhængigt
+	\end{itemize}
+	\begin{definition}{Baser}{}
+		Lad $\U$ være et underrum af $\RR^n$. En basis for $\U$ er et underset $\B$ af $\U$
+		så at (a) B er lineært uafhængigt og (b) $\B$ udspænder $\U$
+	\end{definition}
+	\begin{theorem}{At konstruere en basis}{}
+		Hvis $U$ er et underrum af $\RR^n$ og lad $S$ være et finit underrum af $U$. Så er
+		der to muligheder.
+		\begin{itemize}
+			\item Hvis $S$ udspænder $\U$. Hvis en vektor i $S$ er en lineærkombination af en
+				anden vektor i $S$ så kan $v$ slettes fra $S$ til at forme et underrum $S'$
+				af S som stadigvæk udspænder $U$. Processen kan derfor gentages indtil et
+				lineært underset $\B$ af S er fundet så span $\B = \U$
+			\item Hvis S er lineært uafhængigt. Hvis S ikke udspænder $\U$ så er der en vektor
+				$v$ i $\U$ som ikke er i span S. Sættet er stadigvæk lineært uafhængigt.
+				Gentag ad infinitum til du har sættet $\B$
+		\end{itemize}
+	\end{theorem}
+
+	\begin{theorem}{Unik repræsentering}{}
+		Lad $\U$ være et underrum af $\RR^n$ og lad $\B = \{b_1, b_2, \dots, b_k\}$ være
+		en base for $\U$. Så er enhver vektor $v$ i $\U$ skrevet på kun en måde som lineær
+		kombination hvor skalarerne er unikke.\\
+		Altså kan alle punkter i $\U$ repræsenteres af en og kun en skalarvektor $x$ ganget
+		med $\B$
+	\end{theorem}
+	\begin{definition}{Koordinater}{}
+		Lad $\U$ være et underrum af $\RR^n$ og lad $\B$ være en base $b_1 \dots b_k$.
+		Med enhver vektor $v$ i $\U$ er der en associeret unikt sæt af skalarer $x_1 \dots
+		x_k$ kaldet koordinater af $v$ relativt til B og skrives
+		\[ [v]_\B = \begin{bmatrix}x_1\\x_2\\\dots\\x_k\end{bmatrix}\]
+	\end{definition}
+	\begin{theorem}{Antallet af basisvektorer}{}
+		Lad U være et underrum og lad B og C være to baser for U. Så er der lige mange
+		vektorer i B og C
+	\end{theorem}
+	\begin{definition}{Dimension}{}
+		Lad $\U$ være et underrum af $\RR^n$. Antallet af vektorer $k$ i en basis af U
+		kaldes dimensionen af $U$. Vi siger at U er K-dimensionel og skriver dim U = k.
+	\end{definition}
+	\begin{theorem}{Konstruering af baser af kendt dimension}{}
+		Lad $\U$ være et underrum af $\RR^n$ så $dim \U = k$
+		\begin{itemize}
+			\item Et subset $\B$ af $\U$, bestående af k lineært uafhængige vektorer 
+				spanner automatisk $\U$ 
+			\item Et subset $\B$ af $\U$ bestående af $k$ vektorer der spanner $\U$ er 
+				automatisk lineært uafhængig
+		\end{itemize}
+	\end{theorem}
+	\subsection{Nulrum, kolonnerum og rækkerum}
+	\begin{definition}{Nulrummet af en matrice}{}
+		Lad $A$ være en m x n matrice. Sættet af alle vektorer $x$ i $\RR^n$ der passer på
+		løsningen $Ax = 0$ er kaldet nulrummet og noteres Null A
+	\end{definition}
+	\begin{theorem}{Basis for nulrummet}{}
+		Lad $A$ være en m x n matrix med rank A = r og lad (S) være det homogene lignings
+		system defineret af $Ax = 0$. Den generelle løsning x til (S) kan skrives som en
+		lineær kombination af $n-r$ lineært uafhængige vektorer $\{ v_1, v_2, \dots, v_{n-r}\}$
+		\[ x t_1v_1+t_2v_2 + \dots + t_{n-r}v_{n-r}\]
+		Hvor $t_1, t_2, \dots t_{n-r}$ er n-r uafhænigge parametre der svarer til de frie
+		variabler i systemet $(S)$. Sættet $\B = \{ v_1 \dots v_{n-r}\}$ er en baiss for
+		null A og dimensionen af null A er n-r
+	\end{theorem}
+	\begin{theorem}{Beskrive løsningssæt til lineære systemer}{}
+		Lad et konsistent m x n løsningssystem (S) være skrevet i matrixform $Ax = b$ og
+		lad $S$ være settet af løsninger til (S). Så består S af alle vektorer i $\RR^n$
+		af typen $x = x_p + x_h$ hvor $x_p$ er en løsning for (S) og $x_h$ dækker over
+		alle vektorer i null A
+	\end{theorem}
+	\begin{definition}{Søjlerummet af en matrix}{}
+		Lad A være en mxn matrice. Underrummet $\RR^M$ udspændt af kolonnerne i $A$ 
+		kaldes søjlerummet af $A$ og kaldes col A
+	\end{definition}
+	\begin{theorem}{Base af søjlerum}{}
+		Lad $A$ være en m x n matrice med rank $A = r$. De $r$ pivotkolonner i $A$ former
+		en basis for col A og dimensionen af col A er r
+	\end{theorem}
+	\begin{definition}{Rækkerummet af en matrice}{}
+		Lad A være en m x n matrice. Underrummet af $\RR^n$ udspændt af rækkerne i A kaldes
+		rækkerummet af $A$ og noteres af row A
+	\end{definition}
+	\begin{theorem}{Basis for rækkerummet}{}
+		Hvis $A$ er en m x n matrice med $rank\ A = r > 0$ så er sættet $\B$ af r ikkenul
+		rækkevektorer (transponeret) i den reducerede form $A^*$ af A er en basis for row A
+		og row A har dimensionen r. hvis $rank\ A = 0$ så er søjlerummet $A = \{0\}$
+	\end{theorem}
+	\begin{theorem}{Transponeret rank}{}
+		$rank\ A = rank\ A^T$
+	\end{theorem}
+\end{document}

@@ -1,0 +1,652 @@
+\documentclass[a4paper,fleqn]{report}
+\title{Rapport}
+\author{P\aa b\o l}
+
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{pgf}
+\usepackage{pgfplots}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\usepackage[danish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{lastpage}
+\usepackage{lipsum}
+\usepackage[colorlinks, linkcolor=black]{hyperref}
+\usepackage{listings}
+\usepackage{upquote}
+
+\setlength{\parindent}{0pt}
+
+\newcommand{\RR}{\mathbb{R}}
+\newtheorem{example}{Eksempel}[chapter]
+\newtheorem{theorem}{Theorem}[chapter]
+
+\begin{document}
+	\maketitle
+	\setcounter{page}{1}
+	\chapter{Uge 2: 30/04}
+	\section{Kvadratiske matricer}
+	En $NxN$ matrix $D$ er en diagonalmatrix hvis $d_ij = 0$ for $i \neq j$\\
+
+	Enhedsmatricen $I_n$ er denne $nxn$ diagonalmatrix
+	\[\begin{bmatrix}1&0&\dots&0\\0&1&\dots&\dots\\0&\dots&0&1\end{bmatrix}\]
+
+	\section{Inversible matricer}
+	En $n x n$ matrice er invertibel hvis der findes en $n x n$ matrix så \[XA = AX = I_n\]
+	Altså hvis både AX og XA giver identitetsmatricen\\
+	Hvis både $X_1$ og $X_2$ er inverse til $A$ så gælder: 
+	\[X_2 = X_2I_n = X_2(AX_1) = (X_2A)X_1 = I_nX_1 = X_1\]
+	Derfor er den inverse matrice entydigt bestemt og betegnes $A_{-1}$\\
+	En invertibel matrix $A$ kaldes også regulær, ellers kaldes den singulær\\
+	Hvis $A$ er invertibel så har ligningen $Ax = y$ netop en løsning $x = A^{-1}y$\\
+
+	\subsection{Theorem p. 85}
+	Hvis $A$ og $B$ er invertible så er $AB$ også invertibel og der gælder $(AB)^{-1} = B^{-1}
+	A^{-1}$\\
+	Hvis A er invertibel så er $A^T$ også invertibel og $(A^T)^{-1} = A$\\
+	Hvis A er invertibel så er $A^{-1}$ også invertibel og $(A^{-1})^{-1} = A$\\
+	Hvis $A$ er invertibel og $S \neq 0$ så er $sA$ også invertibel og $s^{-1}A^{-1}=(sA)^{-1}$
+
+	\subsection{Def 2.8}
+	En $N x N$ matrix $X$ er højreinvers til $A$ hvis $AX = I_n$\\
+	Hvis $XA = I_n$ er X venstreinvers\\
+
+	\subsection{Theorem 2.4}
+	Hvis der findes netop en matrice X som er en højreinvers til A så er X også venstreinvers
+	til A og dermed $X = A^{-1}$
+
+	\section{Bestemmelse af invers ved rækkeoperationer}
+	Lad $A$ være en $N x N$ matrice og lad $I = I_n$\\
+	\begin{enumerate}
+		\item Opskriv nmatricen $[A|I]$
+		\item Bring matricen $[A|I]$ til reduceret rækkeechelonform
+		\item Hvis den reducerede rækkeechelonform er $[I|X]$ da er $A^-1 = X$ hvis ikke 
+			da er A ikke invertibel
+	\end{enumerate}
+	
+	\chapter{07/05}
+	\section{Vekrorrummet Rn}
+	Der gælder pene rægneregler\\
+	Multiplikation er ikke heeeeelt simpelt\\
+
+	En mægde V hvis elementer er vektorer med\\
+	\begin{itemize}
+		\item Vektoraddition, $V x V \rightarrow V, (u,v) \rightarrow u + v$
+		\item Skalarmultiplikation $R  V \rightarrow V, (s,u) \rightarrow su$
+	\end{itemize}
+	Mængden $V = R^n$ er et reelt vektorrum\\
+
+	\textbf{VI holder os fra abstrakte vektorrum} Men alt hvad vi skal lære om $R^n$ gælder
+	også i et abstrakt vektorrum $V$
+
+	\section{Underrum}
+	Pæne delmængder i $\RR^n$\\
+	En delmængde $u \subseteq \RR^N $ har tre krav\\
+	Nulvektorern skal ligge i $u$\\
+	For alle $u,v \in u$ gælder også $u+v \in u$\\
+	For alle $s \in \RR$ og $u \in U$ gælder det $su \in U$\\
+	Eksempler er:
+	$U = \{(0,0)\}, U = \text{en linie gennem 0,0}, U = \RR$ \\
+
+	Hvad kan man bruge underrum til? Principal component analysis. Der tilnærmer man et 
+	højdimensionalt datasæt med et lavdimensionalt underrum.\\
+
+	\begin{example}
+		Vi går til $\RR^4$.\\
+		$u = \{(x_1,x_2,x_3,x_4)\} \in \RR^4 | x_1 + x_2 = 2$ og $x_2 + x_3 + x_4 = 0$\\
+		Vi opstiller følgende operation\\
+		\[ x = \begin{pmatrix}x_1\\x_2\\x_3\\x_4\end{pmatrix} \Leftrightarrow
+			\begin{pmatrix} 1&1&0&0\\0&1&1&1\end{pmatrix}\begin{pmatrix}x_1\\x_2\\x_3\\x_4\end{pmatrix}
+		= \begin{pmatrix}0\\0\end{pmatrix} \Leftrightarrow Ax = 0\]
+		Da $A0 = 0$ gælder $0 \subseteq U$\\
+		Hvis u,v $\subset u$ gælder $Au = 0$ og $Av = 0$. Matrixregning giver
+		\[ A(u+v) = Au + Av = 0 + 0 = 0\]
+		og dermed gælder $u+v \subset U$\\
+		Lad $s \in \RR$. Det gælder at $s(u+v) \subset U$ og da 
+		\[ A(su) = sAu = s\cdot0 = 0\]
+	\end{example}
+
+
+	\section{Span}
+	Lad $S = \{ v_1, \dots, v_k\} \in \RR$. Sæt \\
+	$span S = span\{v_1,\dots,v_k\} = \{ x_1v_1, \dots x_k v_k | x_{1 ... k} \in \RR\}$
+	dvs span $S$ er mængden af alle linearkombinationer af v.\\
+	I planen $\RR^2$ er spannet hele planen\\
+
+	\begin{example}
+		Vi betragter i $\RR^3$ vektorerne\[\begin{pmatrix}a\\2\\3\end{pmatrix}, v_2 = 
+		(3,4,5), v_3 = (7,8,9)\] Vektoren $u$ tilhører span(v1,v2,v3) hvis der findes
+		koefficineter $x_n$ så det giver $u$\\
+		\[ \begin{pmatrix}1&4&6\\2&5&8\\4&6&9\end{pmatrix}\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}
+		= \begin{pmatrix}1\\1\\1\end{pmatrix}\]
+		Gauss jordangiver så til sidst et ligninssystem med en fri variabel. Altså der er
+		uendeligt mange løsninger. Altså $u \in span v_1, v_2, v_3$
+	\end{example}
+
+	Derfra ser vi følgende. $u$ ligger i spannet hvis\\
+	\begin{itemize}
+		\item u tilhører spannet.
+		\item ligningssystemet $Ax = u$ har mindst en løsning
+	\end{itemize}
+
+	\textbf{Theorem 3.2}\\
+	Span er et underrum\\
+	\textbf{Def 3.4}\\
+	Lad $u$ være et underrum af $\RR^n$ og lad $s \subseteq U$ være en endelig delmængde. Man siger at
+	$S$ udspænder $U$ hvis span S = U\\
+
+	\section{Lineær uafhængighed}
+	Vi har de tre vektorer fra tidligere. De udspænder en 2d plan i $\RR^3$. Men vektor
+	$v_3 \in span v_1, v_2$ Altså er $v_3$ overflødig. Derfor er de lineært afhængige\\
+
+	\textbf{Definition 3.5} Lineær uafhængighed\\
+	Et set $S = \{ v_1\dots v_k \}$ af vektorer i $\RR^n$ kaldes afhængige hvis den eneste
+	løsning til ligningen $x_1v_1 + \dots + x_kv_k = 0$ er $x_1 = x_k = 0$. Ellers er de
+	lineært afhængige.
+	\begin{example}
+		Det kan skrives som 
+		\[ \begin{pmatrix}1&4&6\\2&5&8\\4&6&9\end{pmatrix}\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}
+		= \begin{pmatrix}0\\0\\0\end{pmatrix}\] som på rre har en fri variabel, altså
+		har de uendelig mange løsninger så de er \emph{Lineært afhængige}\\
+
+		Bemærk: Hvis $v_4 \in \RR^3$ er en vilkårlig vækrot da er $v1, v_2, v_3, v_4$ også
+		lineært afhængige, da vi bare kan bruge den gamle løsning og sætte $x_4 = 0$\\
+	\end{example}
+
+	Sætter du det op på totalmatriceform ved du at hvis $rank A < k$ er systemet afhængigt\\
+
+	En konsekvens af det er\\
+	\textbf{Theorem 3.5} Lad $n x n$ er invertibel hvis og kun hvis søjlerne er lineært
+	uafhængige.\\
+
+	Derudover så:\\
+	\textbf{Theorem 3.6} $v_1, \dots, v_k \in \RR^3$ er lineært uafhængige da $k \leq n$ eller
+	fem vektorer i $\RR^4$ skal være uafhængige\\
+
+	Derudover siger vi. i et afhængigt. Der findes mindst en vektor $v_i$ i spannet $v_1 , v_k$
+
+	\section{Baser}
+	Lad $u$ være et underrum af rn. en endelig delmængde $B \subseteq U$ kaldes en basis for
+	$U$ hvis: $B$ er lineært uafhængigt og $span B = U$
+
+
+	\subsection{Standardbasen for $\RR^n$ har en basis}
+	Hvis $U \neq 0$ så har $U$ uendeligt mange forskellige baser\\
+
+	Antallet af vekrorer i en basis for et underrum er entydigt bestemt
+
+	\chapter{09/05}
+	\section{Koordinater}
+	Man skal have $n$ retninger.\\
+
+	\textbf{Definition 3.7 og Theorem 3.8}\\
+	Lad $B = \{b_1, ..., b_k\}$ være en ordnet basis for et underrum $U \subseteq \RR^n$
+	Til hvert $v \in U$ findes entydigt bestemte tal $x_1, \dots, x_k \in \RR$ så\\
+	\[v = x_1 b_1 + \dots + x_kb_k\] Vektoren med disse tal kaldes koortinaterne for $v$ mht.
+	basen $B$ \[ [V]_b = \begin{pmatrix}x_1\\\dots\\x_k\end{pmatrix}\]
+	Altså kan vi for ethvert punkt udspændt af $B$ kan vi opskrive det på koordinatform vha. $B$
+	Vi kan finde koordinaterne til en vektor $u$ ved at sætte dem op på et ligningssystem Da:
+	\[ v = x_1 b_1 + \dots + x_k+b_k \] \[ [B|u] \rightarrow [I_n|V_b]\] 
+
+	\subsection{Basisskiftmatricen}
+	Kan omregne fra et koordinatsystem til et andet. Lad der være to ordnede baser $b,c$
+	Fra et og samme underrum $u \subseteq \RR$. Basisskiftmatricen fra $c$ til $b$ er med
+	notation fra 7.32 defineret ved $P_{b \leftarrow c}$ omreg\\
+	Vigtigt: $[v]_b = P_{B \leftarrow C}[v]_c$
+
+	\begin{example}
+	Vi betragter to ordnede baser $C, B$\\
+	Vi udregner så alle koordinater til kollonner i $C$ og lægger dem i matricen. Derved får vi
+	Basisskiftmatricen $P_{B \leftrightarrow C}$\\
+	Så hvis vi har en vekrot $[v]_c$ kan vi udtrykke at $P\cdot[v]_c = [v]_b$
+	\end{example}
+	\subsubsection{Øvelse}
+	Vi har to baser: \[ B =  \begin{bmatrix}1&1\\2&3\end{bmatrix} E = \begin{bmatrix}1&0\\0&1
+	\end{bmatrix}\] Og en udleveret basisiskiftmatrice \[ P_{B \leftarrow E} = 
+\begin{bmatrix}3&-1\\-2&1\end{bmatrix}\]
+	Vi vil nu udtrykke $v = \begin{bmatrix}5\\6\end{bmatrix}$ som koordinater i b\\
+	Vi Ganger nu vektoren met matricen\\
+	\[Pv = \begin{pmatrix}9\\-4\end{pmatrix} \]
+	Derfor har vi \[9\begin{bmatrix}1\\2\end{bmatrix} + -4\begin{bmatrix}1\\3\end{bmatrix}\]
+
+	\subsection{Den inverse til basisskift matrice}
+	VI betrakter at $P_{B \leftarrow C}$ er invertibel, og dens inverse $P_{b\leftarrow C}^{-1}
+	= P_{c \leftarrow b}$\\
+	Så for at finde basisskift fra $P_{x \leftarrow E}$ kan vi bare finde den inverse matrice
+	$x$
+
+	Vi kigger fra nu af på matrixen \[A = 
+	\left(\begin{array}{rrrrr}
+	1 & 0 & 1 & 1 & 0 \\
+	2 & 1 & 1 & 0 & 5 \\
+	3 & 1 & 2 & 3 & 1 \\
+	1 & 1 & 0 & 0 & 3
+	\end{array}\right)\]
+
+	\section{Nulrum}
+	Null space på eng.\\
+	Nulrum er hvor det gælder $null A = \{ x \in \RR^n | Ax = 0 \}$
+
+	\section{Søjlerummet}
+	Column space. Lad $A$ være en $mxn$ matrix. Søjlerummet af $A$ er $col A = span \{ alle
+	søjler i A\}$\\
+	Vi kigger på rre for A\[ B = 
+	\left(\begin{array}{rrrrr}
+	1 & 0 & 1 & 0 & 2 \\
+	0 & 1 & -1 & 0 & 1 \\
+	0 & 0 & 0 & 1 & -2 \\
+	0 & 0 & 0 & 0 & 0
+	\end{array}\right) \] Der er dog to afhængige variable. Vi finder de søjler hvor der står
+	pivoter, altså vi skal beholde søjle 3 og fem og får
+	\[ A' = 
+	\left(\begin{array}{rrrrr}
+		1 & 0 &  1  \\
+		2 & 1 &  0  \\
+		3 & 1 &  3  \\
+		1 & 1 &  0 
+	\end{array}\right)
+	\]
+	Som er vores basis\\
+	Vi ser så at dimensionen af Søjlerummet er 3dimensionelt $dim(col(A)) = rank(A)$\\
+
+	\section{Rækkerum}
+	Lad $A$ være en MxN matrix, rækkerummet af $A$ er row $A = span \{ \text{alle }m \text{
+	rækkevektorer i} A\}$\\
+
+	Sætter vi på rækkeechelonform. Så kan vi sige at alle nonzero rækker er vores span(som
+	vektorer)\\
+	Vi får at dimensionen af $row A = rank A$\\
+	Vi får at basis er de rækker hvori der befinder sig pivoter
+
+	
+	\section{Lineære transformationer}
+	\textbf{Lineære transformationer}\\
+	En funktion $T: \RR^N \rightarrow \RR^m$ som respekterer plus og Skalarmultiplikation\\
+
+	\textbf{Matrixtransformationer}
+	$T_A: \RR^n \rightarrow \RR^m$ givet ved $T_A(x) = Ax$ for alle $x \in \RR^n$\\
+	Enhver matrixtransformation er lineær\\
+	3.18 Omvendt: Enhver lineær transformation er en matrixtransformation\\
+
+	\begin{example}
+		Lad $\theta$ være en vinkel og lad $R_0:R^2 \rightarrow \RR^2$ være den funktion der
+		roterer et punkt i planen vinklen $\theta$ mod uret omkring origo. Det er
+		geometrisk klart at $R_\theta$ er en lineær transformation. Det at rotere  
+		respekterer plus og Skalarmultiplikation. Derfor siger sætning 3.18 at vi har
+		en skjult matrice tilsvarer den\\
+
+		Vi tager de to standardvektorer $e_1, e_2$. Roterer vi de to med $\theta$
+		\[A_\theta = (R_\theta(e_1) | R_\theta(e_2)) = \begin{pmatrix}cos \theta&-sin\theta\\
+		sin\theta&cos\theta\end{pmatrix}\]
+	\end{example}
+	\begin{example}
+		Vi kigger på spejling\\
+		Vi ser at \[ S\begin{pmatrix}x\\y\end{pmatrix} = \begin{pmatrix}x\\-y\end{pmatrix}
+		= \begin{pmatrix}1&0\\0&-1\end{pmatrix}\begin{pmatrix}x\\y\end{pmatrix}\]
+	\end{example}
+	\subsection{Sammensætning af lineære transformationer}
+	Lad der være givet to lineære transformationer $T(x) = Ax$ og $S(y)=By$\\
+	Den sammensatte transformation $S \circ T = S(T(x)) = S(Ax) = B(Ax)) = (BA)x$
+
+	\begin{example}
+		Vi betragter nu både spejling og rotation med vinklen 40
+		Vi har så $(S\circ R)$ roterer en vector 40 og spejler den\\
+		Vi har så $(R\circ S)$ Spejler en vector og roterer med 40\\
+	\end{example}
+
+	\section{Kerne}
+	Lad kernen af t være den lineære transformation $x\in\RR^n | T(x) = 0$\\
+	Kernen er injektiv hcis $ker T = \{0\}$\\
+	Kernen er surjektiv hvis alle vektorer bliver ramt af t\\
+
+	Rotationsmatricen er både injektiv og surjektiv.\\
+	Injektiv: Det vil sige alle vektorer der roteres og ender i nul er $(0,0)$. Logik though\\
+	Surjektiv: Alle vektorer kan roteres over i($Rot_{-40}(Rot_{40}(x)) == x$)\\
+
+	Hvis en lineær transformation både er injektiv og surjektiv(Bijektiv) dette svarer til
+	at matricen $A$ er invertibel. Den inverse lineære transformation er da $A^{-1}x$ hvor $A$
+	er transformationsmatricen\\
+
+	\chapter{14/05}
+	\section{Prikprodukt}
+	Prikproduktet for to vektorer $u,v$ er 
+	$u_1*v_1 + u_2\bullet g v_2 + \dots + u_n\bullet g v_n = u \bullet g v$
+	Vi har $s(u\bullet g v) = su \cdot sv$\\
+
+	\subsection{Norm}
+	Normen af en vektor er $||v|| = \sqrt{v\bullet v}$ Se pyth\\
+
+	Regneregler:
+	\begin{itemize}
+		\item $||v|| \geq 0$ og $||v|| = 0$ netop hvis $v=0$
+		\item $||cv|| = |c|||v||$
+		\item $|u\bullet v \leq ||u||||v||$ Cauchy Schwarz ulighed
+		\item $||u + v|| \leq ||u|| + ||v||$ (Trekantsuligheden)
+	\end{itemize}
+
+	\section{enhedsvektor}
+	En vektor $u \in \RR$ kaldes en enhedsvektor hvis $||u|| = 1$\\
+	For en vilkårlig vektor $u \neq 0$ i $\RR^n$ er den normerede vektor:
+	\[u' = \frac{u}{||u||} \]
+	
+
+	\section{Euklidisk afstand}
+	Den euklidiske afstand mellem to vektorer i $\RR^n$ defineres som:
+	\[d(u,v) = ||u-v|| = \sqrt{(u_1 - v_1)^2 + \dots + (u_n-v_n)^2}\]
+
+	\section{Vinklen mellem to vektorer}
+	For $u,v$ i $\RR^2$ eller i $\RR^3$ kan man vha.\ cosinusrelationerne vise 
+	\[\cos \Theta = \frac{u\bullet v}{||u||||v||}\]
+
+	\section{Ortogonale vektorer og pythagoras}
+	For vinklen $\Theta$ mellem to vektorer u og v har man:
+	\[ \Theta = 90 \quad \cos \Theta = \frac{u\bullet v}{||u||||v||} = 0 
+	\Leftrightarrow u \bullet v = 0\]
+	Definition 4.5, to vektorer $u,v$ i $\RR^n$ kaldes orthogonale hvis $u \bullet v = 0$
+	Der skrives $u \perp v$.\\
+
+	Theorem x.xx: Gælder det $u\perp v \in \RR^n$ så gælder det at $||u+v||^2 == ||u||^2 + ||v||^2$
+	Er to vektorer orthogonale, så gælder det at \[ ||u+v||^2 = ||u||^2 + ||v||^2 \] Da 
+	pythagoras sætning kan bruges på trekanten udspændt over de to retvinklede vektorer
+
+	\section{Ortogonal projektion}
+	Definition 4.6\\
+	Lad $u \neq 0$ være en vektor i $\RR^n$ og lad $U = span u$ være underrummet udspændt af 
+	$u$\\
+	For enhver vektor $v$ i $\RR^n$ defineres nu:
+
+	\begin{itemize}
+		\item Den ortogonale projektion af $v$ på $U$ er givet ved:
+			\[ proj_U(v) = \frac{v\bullet u}{||u||^2}u \]
+
+		\item Komponenten af v ortogonal på $U$ er en vektor der går vinkelrat fra $U$ til $v$
+		\[comp_U(v) = v - proj_u(v) = v-\frac{v\bullet u}{||u||^2} u\]
+
+		\item Spejlingen af $v$ i $U$ er givet ved:
+		\[ refl_U(V) = 2proj_U(v) - v = 2\frac{v\bullet u}{||u||^2}u - v \]
+	\end{itemize}
+
+	\subsection{øvelse}
+	\[ U = span u = span \begin{pmatrix}1\\1\end{pmatrix}\] og $v =  \begin{pmatrix}1\\3\end{pmatrix}$
+	Vi har $u \bullet v = 4$ Vi har $||u|| = \sqrt{2} \Leftrightarrow ||u||^2 = 2$
+	\[ proj_U(v) = \frac{4}{2}u = 2u = \begin{pmatrix}2\\2\end{pmatrix}\]
+	Vi har
+	\[ comp_U (v) = v - proj_U(v) = \begin{pmatrix}-1\\1\end{pmatrix} \]
+
+	\input{figures/proj_comp_refl.pgf}
+	\section{Projektionsmatricen}
+	Det er keometrisk klart at $proj_U, comp_U, refl_U : \RR^n \rightarrow \RR^n$ er lineære
+	transformationer. Derfor findes $nxn $ matricer er 
+	\begin{itemize}
+		\item P - Projektionsmatricen for $U$
+		\item C - Komponentmatricen for $U$
+		\item R - Spejlingsmatricen for $U$
+	\end{itemize}
+	Projektionsmatricerne\\
+	\[ P = \frac{uu^T}{u^Tu} \]\emph{Fordi $uu^T$ er en søjlevektor gange rækkevektor får vi en
+		matrice. $u^T$ er række gange søjle, og derfor en skalar. Derfor får vi matrice
+	divideret med skalar}
+	\[ C = I - P\]
+	\[ R = 2P - I\]
+
+	\section{Ortonormale baser}
+	Et set af vektorer $u_k$ kaldes
+	\begin{itemize}
+		\item Parvist ortogonale hvis $u_i \bullet u_j = 0$ for alle $i \neq j$
+		\item Parvist ortonormale hvis $u_i \bullet u_j = 0$ for alle $i \neq j$ og 
+			$||u_i|| = 1$ for alle i
+	\end{itemize}
+
+	Ethvert sæt $S$ af parvist ortogonale ikke-nul vektorer i $\RR^n$ er lineært uafhængige\\
+	En ortogonal/ortonormal basis for et underrum $U$ af $\RR^n$ er en basis $B$ for $U$ hvori
+	vektorerne er parvist ortogonale/ortonormale
+
+	Hvis vi har en ortogonal base $B$ så kan vi udregne koordinater: 
+	\[ [v]_B = \begin{pmatrix} \frac{v\bullet u_1}{||u_1||^2}\\\dots\\\frac{v\bullet u_k}{||u_k||^2}\end{pmatrix}\]
+
+	\section{Ortogonale Matrice}
+	Vi har en matrix $A$ og søjlerne i $A$ er parvist ortonormale hvis og kun hvis $A^TA = I_K$
+	altså hvis $A^T$ er venstre-invers til $A$\\
+
+	En kvatratisk matrix $Q$ kaldes ortogonal hvis søjlerne i $Q$ er parvist ortonormale altså
+	hvis $Q^TQ = I_n$. Det gælder for den ortogonale matrice $Q$ gælder $Q^{-1} = Q^T$\\
+
+	Ortogonale matricer bevarer prikprodukt: $Qu \bullet Qv = u \bullet v$.\\
+
+	\subsection{Ortogonale lineære transformationer}
+	Hvis vi har en lineær transformation hvor transformationsmatricen er ortogonal så får vi\\
+	Længden af den vektor vi starter med, og den transformerede vektor så bevarer de længden.\\
+	Typisk: Rotationer og spejlinger
+
+	\chapter{16/05}
+	\section{Ortogonal komplement}
+	Definition:\\
+	To underrum $u$ og $v$ af $\RR^n$ kaldes ortogonale hvis enhver vektor i $u$ er ortogonal
+	på enhver vektor i $V$ dvs $u \bullet v = 0 \forall u \in U, v \in V$\\
+	
+	Thm 4.8:\\
+	Lad $U = \text{span}\{u_1,\dots,u_p\}$ og $V = \text{span}\{v_1,\dots,v_q\}$
+	For at checke om underrum er ortogonale er det nok at checke `frembringersæt'. Altså hvis
+	du har to baser $U = \{u_1, u_2\}, V = \{v_1, v_2, v_3\}$ skal vi bare checke 
+	\[ u_1 \bullet v_1 = u_2 \bullet v_1 = u_1 \bullet v_2 = u_2 \bullet v_2 = u_1 \bullet v_3= 
+	u_2 \bullet v_3 = 0\]
+
+
+	Def 4.11\\
+	Lad $U$ være et underrum af $\RR^n$ det ortogonale komplement $U^\perp$ til $U$ består af
+	samtlige vektorer som er ortogonale på alle vektorer i $U$: Det gælder
+	\begin{itemize}
+		\item $U^\perp$ er et underrum af $\RR^n$
+		\item $U^\perp \cap U = \{0\}$
+		\item $(U^\perp)^\perp = U$
+	\end{itemize}
+	Ortogonal komplementet til en linie er et plan\\
+
+	Thm 4.10. For enhver matrix $A$ Gælder \[ (row A)^\perp = null A\]
+	\[(col A)^\perp = null A^\perp\]\[(null A)^\perp = row A\]
+	Vi har også $dim U + dim U^\perp = n$ hvor n er fra $\RR^n$
+
+	\section{Ortogonal projektion}
+	Vi har lært en-dimensionel projektion(eg vektor til vektor)\\ Vi skal nu projektere generelt
+
+	Den ortogonale projektion af $v$ på $U$ er 
+	\[ proj_U(v) = \frac{v\bullet u_1}{||u_1||^2 u_1}+ \dots + 
+		\frac{v\bullet u_k}{||u_k||^2 u_k }
+		\]
+			\[comp_U(v) = v-proj_U(v)\]
+
+	\section{Gram-Schmidt processen}
+	Gram-schmidt kan lave et ortogonalbasis til en ortonormalbasis\\
+	Lad $u_1, \dots, u_n$ være lineært uafhængige vektorer, og dermed en basis for underrummet
+	$U = span u_1 u_n$. Vi normaliserer så
+	\[ q_1 = \frac{u_1}{||u_1||}\]
+	MANGLER
+
+	\section{QR faktorisering}
+	Det er en måde at skrive en matrix som et produkt af to pæne matrixer, vi definerer $u$ som søjler
+	i $A$\\
+	Man laver Gram-Schmidt, og holder styr på tallene $r_{ij}$
+	\[ q_1 = \frac{u_1}{||u_1||} = \frac{u_1}{r_{11}} \]
+	\[ q_2 = \frac{u_2 - (u_2 \bullet q_1)q_1}{||u_2 - (u_2 \cdot q_1)q_1} = \frac{u_2 - r_{12}q_1}{r_{22}}\]
+	Så har vi $r_{ij}$
+	\[ A = QR = (q_1 |q_2 | \dots | q_n)
+		\begin{pmatrix}
+			r_{11}&r_{12}&\dots&r_{1j}\\
+			0 & r_{22} & \dots r_{2j}\\
+		\end{pmatrix}
+	\]
+
+	\section{Mindste kvadraters metode}
+	fFor en $mxn$ matrix $A$ betragter vi et lineært ligningssystem $Ax = b$, hvori der
+	er mange ligninger med få ubekendte. Hvis ligningssystemet er inkonsistent, så efterspørger
+	vi i stedet den vektor $x$ som gør størrelsen $||b-Ax||$ mindst muligt. Altså den $x$ der
+	kommer tættest på $b$\\
+	Thm 4.13 viser at vi skal vælge $x = \bar{x}$ hvor $A\bar{x} = proj_{col A}(b)$\\
+	For $\bar{x}$ gælder altså at $b-A\bar{x}$ er ortogonal til søjlerummet. Derfor ved vi at
+	$A^T(b-A\bar{x}) = 0$ Den søgte vektor $\bar{x}$ tilfredsstiller altså følgende ligningssystem
+	$A^TA\bar{x} = A^Tb$
+	Vi får så næsten altiD(praktisk altid)
+	\[ \bar{x} = (A^TA)^{-1}A^Tb \] Altså den vektor $\bar{x}$ der kommer tættest på at løse
+	ligningssystemet\\
+
+	Et eksempel på brug kunne være en samling datapunkter med tilsvarende x,y koordinater, 
+	vi har nu mange datapunkter(ligninger $y = ax+b$) og to ubekendte $a,b$)
+
+	\chapter{forlasning 11}
+	\section{Diagonalisering af matricer}
+	Det drejer sig om ligningen \[P^{-1}AP = \begin{bmatrix}\lambda_1&0&0\\0&\lambda_2&0\\0&0&\lambda_3\end{bmatrix}\]
+	En $n x n$ matrix kaldes diagonaliserbar hvis der findes en matrix P og en diagonalmatrix som opfylder
+	$P^{-1}AP = D$.
+	Matricen $A - (1,1,)(-2,4)$ er diagonaliserbar fordi $P = (1,1)(1,2)$ og $D = (2,0)(0,3)$\\
+
+	\section{Lidt teori}
+	Vi antager at $A$ er diagonaliserbar n x n matrix, dcs $P^{-1}AP=D$. Vi kan rykke lidt
+	rundt og forgange med P på begge sider $P^{-1}AP = D \Rightarrow AP=PD$ og vi bemærker
+	$Av_1 | \dots | Av_n) = AP = PD = (\lambda_1v_1|\dots|\lambda_nv_n)$
+	Vi konkluderer at 
+	\begin{itemize}
+		\item $\lambda$ er en egenværdi for $A$ med tilhørende egenvektor $v$.
+		\item $\{v_1, \dots, v_n\}$ er en basis for $\RR^n$ bestående af egenvektorer i $A$
+	\end{itemize}
+	
+	\begin{theorem}{6.4}
+		Lad A være en n x n matrix med k indbyrdes forskellige komplekse egenværdier.
+		Vælg for hver $1 \leq i \leq k$ en basis $B_i$ for egenrumet $E_{\lambda_i} = 
+		Null(A - \lambda_iI)$ så er mængden $B = B_1 \cup \dots \cup B_k$ lineært uafhængig
+		og der gækder: $A$ er diagonaliserbar og antallet af vektorer i B = n
+	\end{theorem}
+
+	\section{En metode}
+	Lad $A$ være en n x n matrix med indbyrdes forskellige komplekse egenværdier $\lambda_1,
+	\dots, \lambda_k$ hvor $k \leq n$\\
+	\begin{itemize}
+		\item Vælg basis $B_1 = v_1, \dots, v_{g_{\lambda_1}}$ for $E_{\lambda_1} = Null(A-\lambda_{1} \cdot I) $
+		\item $\dots$
+		\item Vælg basis $B_k = v_1, \dots, v_{g_{\lambda_k}}$ for $E_{\lambda_k} = Null(A-\lambda_k \cdot I)$
+	\end{itemize}
+	Vi opstiller så de baser som søjler i en
+	
+
+	\section{Øvelse}
+	Vi får en matrix $A$
+	\[ A = \begin{pmatrix}2 & 3\\3 & 2\end{pmatrix} \]
+	Og vil bestemme $P$ og $D$. Vi bruger sage
+	\begin{verbatim}
+
+sage: a = matrix(SR,2,2,[2,3,3,2])
+sage: a.eigenvalues()
+[5, -1]
+sage: a - (5*identity_matrix(2))
+[-3  3]
+[ 3 -3]
+sage: (a - (5*identity_matrix(2))).rref()
+[ 1 -1]
+[ 0  0]
+sage: b1 = vector([1,1])
+sage: (a + identity_matrix(2))
+[3 3]
+[3 3]
+sage: (a + identity_matrix(2)).rref()
+[1 1]
+[0 0]
+sage: b2 = vector([-1,1])
+sage: P = matrix(SR,2,2,[b1,b2]).T
+sage: P
+[ 1 -1]
+[ 1  1]
+sage: P.inverse()*a*P
+[ 5  0]
+[ 0 -1]
+
+\end{verbatim}
+	Og så har vi fundet P og D
+	\chapter{04/06}
+	\section{Markovkæder}
+	En markovkæde er et dynamisk system der opstår ud fra tilstande og 
+	overgangssandsyndligheder. \\
+	Betragt et system: En vilkårlig datalog\\
+	Tilstange:\\
+	\begin{itemize}
+		\item[O1]De arbejder i firma A
+		\item[O2]De arbejder i firma B
+		\item[O3]De arbejder i firma C
+	\end{itemize}
+	Du kan opstille sandsynligheder:
+	\begin{tabular}{c|ccc}
+		Til\Fra&O1&O2&O3\\
+		O1&0.6&0.2&0.4\\
+		O2&0.2&0.6&0.4\\
+		O3&0.2&0.2&0.2\\
+	\end{tabular}
+	Så hvis datalogen i et givent år arbejder i firma A, så er der 20\% chance for at han
+	året efter tager et arbejde i firma B\\ Observer alle rækker/kolloner giver 1\\
+
+	Vi opskriver en overgangsmatrice. Det er en stokastisk matrix, hver søjle i P består af
+	ikke-negative tal som usmmer til 1. Se også linkmatrixen i Googles page rank
+	\[
+		P = \begin{pmatrix}
+			0.6&0.2&0.4\\
+			0.2&0.6&0.4\\
+			0.2&0.2&0.2\\
+		\end{pmatrix}
+	\]
+	Den kaldes rægulær, hvis en høj potens $k > 0$ således at $P^k$ kun har strengs positive
+	indgange\\ P er regulær da $P^1$ har positive indgange\\
+	\begin{theorem}Thm 6.9 (Konvergens)
+		Lad $P$ være en rægulær stokastisk matrix. Da gælder:
+		\begin{itemize}
+			\item $\lambda = 1$ er en egenværdi for P
+			\item For en vilkårlig vektor $u_0 \neq 0$ vil $P^ku_0$ konvergere mod en egenvektor
+				hørende til egenværdien $\lambda = 1$ en ligevægt.
+		\end{itemize}
+		dvs.
+		\[P^ku_0 \rightarrow w \text{ for } k \rightarrow \infty \text{ hvor } Pw = w\]
+	\end{theorem}
+	Det giver en måde at beregne en egenvektor for $P$ hørende til lambda=1 uden fx at skulle
+	løse ligninger:\\
+	Man udregner fx blot $P^ke_1$ for høje potenser K\\
+	Hvis P er stor så er det den eneste måde at finde egenvektor på i rimelig tid\\
+
+	Fortsætter vi vores eksempel så har vi 150 dataloger der i år $t_0$ er fordelt:
+	\[ u_t = \begin{pmatrix}x_t\\y_t\\z_t\end{pmatrix} \qquad u_1 =
+	\begin{pmatrix}60\\50\\40\end{pmatrix}\]
+
+	Vi har \[x_{t+1} = 0.6x_t + 0.2y_t + 0.4z_t \] Og videre, se matrix P
+
+	Vi opskriver udviklingsreglen
+	\[u_{t+1} = Pu_t = 
+		\begin{pmatrix}
+			0.6&0.2&0.4\\
+			0.2&0.6&0.4\\
+			0.2&0.2&0.2\\
+		\end{pmatrix}\begin{pmatrix}x_t\\y_t\\z_t\end{pmatrix}
+	\]
+	Thm 6.9 forudsiger at arbejdsstyrken på 150 dataloger med tiden vil stabilisere sig mod
+	en ligevægt $w$ der kan beregnes som 
+	\[ w \approx P^ku_0\] hvor $k$ er stor og $w$ er en egenværdi
+
+	For $k = 5$ har vi et estimat
+
+	\[ = P^5u_0 = 
+		\begin{pmatrix}
+			0.6&0.2&0.4\\
+			0.2&0.6&0.4\\
+			0.2&0.2&0.2\\
+		\end{pmatrix}^5\begin{pmatrix}60\\50\\40\end{pmatrix}
+		\approx 
+		\begin{pmatrix}60\\60\\30\end{pmatrix}
+	\]
+
+	\section{Principal Component Analysis PCA}
+	Vi har et datasæt i eks 3-dimensioner. PCA reducerer til en vektor og en ortogonalvektor\\
+	De kan eks. graferes i $\RR^3$. Det vil vi lave Principal Component Analysis. Det vil finde
+	de retninger som "datasættet peger mest og mindst i". Det kan simpelt beskrives som
+	en generalisering af lineær regression.\\
+	Hvorfor? Det tillader fx at reducere datasettets dimensioner på en nogenlunde intelligent
+	måde. Eksempelvis 3d underrum til 2d plan\\
+
+\end{document}

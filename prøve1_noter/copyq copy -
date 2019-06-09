@@ -1,0 +1,5 @@
+% Big fugly math letters
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\U}{\mathcal{U}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}

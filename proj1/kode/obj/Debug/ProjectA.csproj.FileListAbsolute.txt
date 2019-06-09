@@ -1,0 +1,9 @@
+/home/cpj/UNI/blok4/linalg/proj1/kode/bin/Debug/ProjectA.exe
+/home/cpj/UNI/blok4/linalg/proj1/kode/bin/Debug/ProjectA.pdb
+/home/cpj/UNI/blok4/linalg/proj1/kode/bin/Debug/System.dll
+/home/cpj/UNI/blok4/linalg/proj1/kode/bin/Debug/System.pdb
+/home/cpj/UNI/blok4/linalg/proj1/kode/obj/Debug/ProjectA.csprojAssemblyReference.cache
+/home/cpj/UNI/blok4/linalg/proj1/kode/obj/Debug/ProjectA.csproj.CoreCompileInputs.cache
+/home/cpj/UNI/blok4/linalg/proj1/kode/obj/Debug/ProjectA.csproj.CopyComplete
+/home/cpj/UNI/blok4/linalg/proj1/kode/obj/Debug/ProjectA.exe
+/home/cpj/UNI/blok4/linalg/proj1/kode/obj/Debug/ProjectA.pdb
