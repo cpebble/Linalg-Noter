@@ -1,0 +1,248 @@
+\documentclass[a4paper,fleqn]{article}
+\title{Rapport}
+\author{P\aa b\o l}
+
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\usepackage[danish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{lastpage}
+\usepackage{lipsum}
+\usepackage[colorlinks, linkcolor=black]{hyperref}
+\usepackage{listings}
+\usepackage{upquote}
+\usepackage[most]{tcolorbox}
+
+\definecolor{bluekeywords}{rgb}{0.13,0.13,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{redstrings}{rgb}{0.9,0,0} 
+\newcommand{\hmwkTitle}{} % Assignment title
+\newcommand{\hmwkDueDate}{} % Due date
+\newcommand{\hmwkClass}{} % Course/class
+\newcommand{\hmwkClassInstructor}{Lærer: } % Teacher/lecturer
+\newcommand{\hmwkAuthorName}{Christian P\aa b\o l} % Your name
+\newcommand{\hmwkProblem}{Problemformulering: \emph{text}}
+
+% Big fugly math letters
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\U}{\mathcal{U}}
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+
+%% Theorems and examples
+\newtcbtheorem[auto counter,number within=section]{theorem}%
+  {Theorem}{fonttitle=\bfseries\upshape, fontupper=\slshape,
+     arc=0mm, colback=blue!5!white,colframe=blue!75!black}{theorem}
+\newtcbtheorem[auto counter, number within=section]{definition}%
+  {Definition}{fonttitle=\bfseries\upshape, fontupper=\slshape,
+     arc=0mm, colback=red!5!white,colframe=red!75!black}{definition}
+\newtcbtheorem[auto counter, number within=section]{example}%
+  {Example}{fonttitle=\bfseries\upshape, fontupper=\slshape,
+     arc=0mm, colback=green!5!white,colframe=green!75!black}{example}
+
+\addtolength{\oddsidemargin}{-.875in}
+\addtolength{\evensidemargin}{-.875in}
+\addtolength{\textwidth}{1.75in}
+\setlength{\parindent}{0in}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName} % Top left header
+\chead{\hmwkClass\ : \hmwkTitle} % Top center head
+\rhead{\rightmark}
+\cfoot{} % Bottom center footer
+\rfoot{Page\ \thepage\ of\ \protect\pageref{LastPage}} % Bottom right footer
+
+\title{
+	\vspace{2in}
+	\textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+	\normalsize\vspace{0.1in}\small{Afleveres:\ \hmwkDueDate}\\
+	\vspace{0.1in}\large{\textit{\hmwkClassInstructor}}\\
+	\normalsize\vspace{0.5in} \hmwkProblem  \\
+	\vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+
+\begin{document}
+	\maketitle
+	\newpage
+	\tableofcontents
+	\setcounter{page}{1}
+	\setcounter{section}{3}
+	\section{Orthogonalitet}
+	\subsection{Krydsprodukt og Norm}
+	\begin{definition}{Krydsprodukt}{}
+		Lad $u = \{ u_1, u_2, \dots, u_n\}$ og $v = \{ v_1, v_2, \dots, v_n\}$ være vektor
+		i $\RR^n$. Tallet $u \bullet v$ (u punkt v) er nu defineret: 
+		\[ u \bullet v = u_1 v_1 + u_2 v_2 + \dots + u_n v_n \]
+		Kaldes Krydsprodukt, eller skalarprodukt af u og v
+	\end{definition}
+	Vi er opmærksomme på at dette kan opskrives som to rækkematricer:
+	\[ u \bullet v = \left[u_1, u_2, \dots u_n\right] \begin{bmatrix}v_1\\v_2\\\vdots\\v_n
+		\end{bmatrix} = \left[v_1, v_2, \dots, v_n \right]\begin{bmatrix}u_1\\u_2\\
+		\vdots\\u_n\end{bmatrix}
+	\]Hvilket viser $u \bullet v = u^Tv = v^Tu$. Derfor ser vi hvis A, B er reelle matricer der
+	kan ganges sammen så er $C[i,j] = A_i \bullet B_j$ Altså Krydsprodukt af A række i og B
+	kolonne j.\\
+
+	Vi har følgende axiomer/regler:
+	\begin{itemize}
+		\item[DP1] $u\bullet v = v\bullet u$ (Commutativity)
+		\item[DP2] $u \bullet(v+w) = u\bullet v + u\bullet w$ (Distributivity)
+		\item[DP3] $c(u\bullet v) = (cu)\bullet v = u\bullet (cv)$
+		\item[DP4] $v \bullet v \geq 0$ og $v\bullet v = 0$ hvis og kun hvis $v = 0$
+	\end{itemize}
+	\begin{definition}{Euklidisk norm}{}
+		Lad $v$ være en vector $1\dots n$ i $\RR^n$. Den euklidiske norm er ikkenegativt og
+		givet ved:
+		\[ ||v|| = \sqrt{v^2_1 + v^2_2 + \dots + v^2_n}\]
+		Vi bruger $||v||$ til at denotere den euklidiske norm
+	\end{definition}
+
+	\begin{theorem}{Cauchy-Schwarz Ulighed}{}
+		Lad u og v være vektorer i $\RR^n$. Så har vi:
+		\[ \text{abs}(u\bullet v) \leq ||u||\cdot||v||\]
+	\end{theorem}
+	\begin{definition}{Euklidisk længde mellem to vektorer i $\RR^n$}{}
+		Lad $u,v$ være $n$-vektorer i $\RR^n$. Den euklidiske længde mellem u og v er
+		skalaren $d(u,v)$ givet ved:
+		\[d(u,v) = ||u - v|| = \sqrt{(u_1-v_1)^2 + (u_2-v_2)^2 + \dots + (u_n - v_n)^2}\]
+	\end{definition}
+	\begin{definition}{Vinklen mellem to vektorer}{}
+		Lad u,v være vektorer i $\RR^n$. Vinklen mellem u,v er vinklen $\theta$. Det gælder
+		$0 \leq \theta \leq \pi$ som opfylder:
+		\[ \cos\theta=\frac{u\bullet v}{||u||\cdot||v||}\]
+	\end{definition}
+	\begin{definition}{Orthogonalitet}{}
+		Vektorerne $u,v$ i $\RR^n$ er orthogonale hvis $u \bullet v = 0$ og vi skriver
+		$u \perp v$ 
+	\end{definition}
+	\begin{theorem}{Pythagorean theorem}{}
+		Lad $u$ og $v$ være vektorer i $\RR^n$. Så har vi:
+		\[||u+v||^2 = ||u||^2 + ||v||^2\]
+		Hvis og kun hvis u og v er ortogonale
+	\end{theorem}
+	\begin{definition}{Orthogonal projektion, komponent og reflektion}{}
+		Lad $v$ være enhver ikkenul vektor i $\RR^n$ og lad $\U$ være et endimensionelt
+		underrum af $\RR^n$ med basis $\{u\}$. Projektion, component og reflektion af v
+		med respekt til $\U$ er givet ved:
+		\begin{equation}\begin{array}{r@{\hspace{0.7in}}l}
+			\text{Projektion af v på }\U & p_\U(v) = \frac{v\bullet u}{||u||^2}u\\
+			\text{Component af v orthogonal til }\U &c_\U(v)=v-\frac{v\bullet u}
+			{||u||^2}u\\
+			\text{Reflection af v på }\U&r_\U(v)=2\frac{(v\bullet u)}{||u||^2}u-v
+		\end{array}\end{equation}
+	\end{definition}
+	\subsection{Ortogonale set, ortogonale Matricer}
+	\begin{definition}{Ortogonale set, ortonomale set}{}
+		Et set af vektorer $S = \{u_1, u_2, \dots, u_k\} \in \RR^n$ kaldes ortogonal hvis
+		$u_i \bullet u_j = 0$ for alle par $i,j \in 0\dots k, i \neq j$
+		Vektorerne er så parvist ortogonale. Et ortogonalt set  kaldes ortonormal hvis
+		hver vektor i $S$ er en enhedsvektor
+	\end{definition}
+	\begin{theorem}{Ortogonalitet og lineær uafhængighed}{}
+		Lad $S = \{u_1, u_2, \dots, u_k\}$ være et sæt af ikke-nul vektorer i $\RR^n$. Hvis
+		S er ortogonal så er S lineært uafhængig
+	\end{theorem}
+	\begin{definition}{Ortogonal basis, ortonormal basis}{}
+		En basis $\B$ for et underrum $\U$ i $\RR^n$ kaldes ortogonal hvis settet $\B$ er
+		ortogonalt. Det samme kan siges for Ortonormalitet
+	\end{definition}
+	\begin{theorem}{Koordinater relativt til en ortogonal basis}{}
+		Lad $\U$ være et underrum af $\RR^n$ og lad $\B = \{u_1, \dots, u_k\}$ være en
+		ortogonal basis for $\U$. Så vil enhver vektor u i $\U$ have den unikke
+		repræsentation:
+		\[ u = \frac{u\bullet u_1}{||u_1||^2}u_1+\dots+\frac{u\bullet u_k}{||u_k||^2}u_k\]
+	\end{theorem}
+	\begin{theorem}{Koordinater relativt til en ortonormal basis}{}
+		Lad $\U$ være et underrum af $\RR^n$ og lad $\B = \{u_1, \dots, u_k\}$ være en
+		ortonormal basis. Så vil enhver vektor $u \in \U$ have en unik repræsentation vist:
+		\[ u = (u\bullet u_1)u_1 + (u\bullet u_2)u_2 + \dots + (u\bullet u_k)u_k \]
+	\end{theorem}
+	\begin{theorem}{En venstreinvers for a}{}
+		Lad A være en n x k matrix. Så $A^TA=I_k$ hvis og kun hvis kolonnerne i A former en
+		ortonormal set i $\RR^n$.
+	\end{theorem}
+	\begin{definition}{Orthogonal matrices, orthogonal transformations}{}
+		en $n\times n$ matrix Q kaldes orthogonal hvis $Q^TQ = I_n$. En lineær
+		transformation $T$ på $\RR^n$ defineret af en ortogonal matrice $Q$ kaldes en
+		ortogonal transformation
+	\end{definition}
+	\begin{theorem}{Karakterisering af ortogonale matricer}{}
+		Lad $Q$ være en $n \times n$ matrice. De følgende udsagn er ekvivalente:
+		\begin{itemize}
+			\item[a] Q er ortogonal
+			\item[b] $Qu\bullet Qv = u\bullet v$ for $u,v \in \RR^n$
+		\end{itemize}
+	\end{theorem}
+	\subsection{Ortogonale underrum, Projektioner, Baser}
+	\begin{definition}{Ortogonale underrum}{}
+		Underrummene $\U$ og $\V$ in $\RR^n$ kaldes ortogonale hvis enhver vektor u i $\U$
+		er ortogonal til enhver vektor v i $\V$. Vi skriver $\U\perp\V$ når dette er sandt.
+	\end{definition}
+	\begin{theorem}{Kriterie for at to underrum er ortogonale}{}
+		Lad $\U = span\{u_1,\dots,u_p\}$ og $\V = span\{v_1,\dots,v_q\}$ være underrum af
+		$\RR^n$. De følgende udsagn er ekvivalente:
+		\begin{itemize}
+			\item[a] $\U \perp \V$
+			\item[b] $u_i \perp v_j \forall i,j \in \RR^n; 1 \leq i \leq p, 1 \leq j
+				\leq q$
+		\end{itemize}
+	\end{theorem}
+	\begin{definition}{Ortogonal kompliment}{}
+		Lad $\U$ være et underrum af $\RR^n$. Ortogonalkomplimentet af $\U$, noteret af
+		$\U^\perp$ er sættet af alle vektorer v i $\RR^n$ så $v \perp u$ for hver u i $\U$
+	\end{definition}
+	\begin{theorem}{Egenskaber af Ortogonal komplimenter}{}
+		Lad $\U$ være et underrum af $\RR^n$. Så vil følgende egenskaber gælde:
+		\begin{itemize}
+			\item[a] $U^\perp$ er et underrum af $\RR^n$
+			\item[b] Skæringen mellem underrummene $\U$ og $\U^T$ er nulrummet.
+				Det vil sige at det eneste vektor/rum/whtever både $\U$ og $\U^T$ 
+				deler er $\{0\}$
+			\item[c] $(\U^\perp)^\perp = \U$
+		\end{itemize}
+	\end{theorem}
+	\begin{theorem}{Ortogonal komplimenter af fundamentale underrum}{}
+		Lad A være en $m\times n$ matrix. Så har du
+		\[ col(A)^\perp = null(A^T) \qquad row(A)^\perp = null(A)\]
+	\end{theorem}
+	\begin{theorem}{Ortogonal kompliment, Dimension}{}
+		Lad $\U$ være et underrum af $\RR^n$ med dimension $\U = k, k \leq n$. Du har
+		$dim(\U^\perp) = n-k$ og
+		\[ dim(\U) + dim(\U^\perp) = n\]
+		Hvis $\B = \{u_1, u_2, \dots, u_k\}$ er en basis for $\U$ og $B^\perp = \{v_{k+1},
+		\dots, v_n\}$ er en basis for $\U^\perp$ så er unionen $\B \cup \B^\perp$ en basis
+		for $\RR^n$
+	\end{theorem}
+	\begin{definition}{Projektion på et underrum af $\RR^n$}{}
+		Lad $\U$ være et underrum af $\RR^n$ med en orthogonal basis $u_1 \rightarrow u_k$
+		og lad v være en vektor i $\RR^n$. Den orthogonale projektion af v på $\U$
+		noteret $proj_\U(v)$ eller $\bar{v}$ er defineret som:
+		\[\bar{v} = proj_\U(v) = p_1u_1 + p_2u_2+\dots+p_ku_k\]
+		Hvor
+		\[p_i = \frac{v\bullet u_i}{||u_i||^2} = \frac{v^Tu_i}{u_i^Tu_i}, 1 \leq i \leq k\]
+	\end{definition}
+	\begin{theorem}{Ortogonal dekomposition}{}
+		Lad $\U$ være et underrum af $\RR^n$ med den ortogonale basis $u_1,\dots,u_k$.
+		Enhver vektor v i $\RR^n$ har en unik dekomposition \[v = \bar{v}+w\] hvor
+		$\bar{v} = proj_\U(v)$ er i $\U$ og $w = comp_\U(v) = v-\bar{v}$ er i $\U^\perp$
+	\end{theorem}
+	\begin{theorem}{Bedste approximering}{}
+		Lad $\U$ være et underrum af $\RR^n$ og lad v være enhver vektor i $\RR^n$. Den
+		ortogonale projektionsvektor $\bar{v} = proj_\U v$ opfylder
+		\[ ||v-x|| > ||v-\bar{v}|| \]
+		For alle vektorer x i $\U$ forskelligt fra $\bar{v}$
+	\end{theorem}
+	\begin{theorem}{QR-factorization}{}
+		Lad A væëe en m x n matrix så rank $A = n$. A har en faktorisering $A = QR$ hvor
+		$Q = [q_1,q_2,\dots,q_n]$ er $m \times n$ med ortonormale kolonner og R er en
+		invertibel øvre triangulær matrix.
+	\end{theorem}
+\end{document}
